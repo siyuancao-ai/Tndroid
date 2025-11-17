@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>VelocityTracker - Jndroid</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="../assets/vendor/yui-min.js"></script>
+  </head>
+  <body>
+
+    <div id="doc">
+      <!-- <header class="main-header"> -->
+      <!--   <div class="content"> -->
+      <!--     <div class="project-title"> -->
+      <!--        -->
+      <!--       <h1 class="project-name">Jndroid</h1> -->
+      <!--        -->
+
+      <!--     </div> -->
+      <!--     <ul class="jump-links"> -->
+      <!--       <li><a href="#index" class="index-jump-link">index</a></li> -->
+      <!--       <li><a href="#top" class="top-jump-link">top</a></li> -->
+      <!--     </ul> -->
+      <!--   </div> -->
+      <!-- </header> -->
+      <div id="bd" class="main-body">
+
+        <div id="docs-sidebar" class="sidebar apidocs">
+          <div id="api-list">
+          <div id="api-tabview" class="tabview">
+            <!-- <ul class="tabs"> -->
+            <!--     <li><a href="#api-classes">Classes</a></li> -->
+            <!--     <li><a href="#api-modules">Modules</a></li> -->
+            <!-- </ul> -->
+          
+            <div id="api-tabview-filter">
+              <input type="search" id="api-filter" placeholder="Type to filter APIs">
+            </div>
+          
+            <div id="api-tabview-panel">
+              <ul id="api-classes" class="apis classes">
+                <li><a class="type" href="../classes/Button.html">Button</a></li>
+                <li><a class="type" href="../classes/Color.html">Color</a></li>
+                <li><a class="type" href="../classes/Drawable.html">Drawable</a></li>
+                <li><a class="type" href="../classes/EditText.html">EditText</a></li>
+                <li><a class="type" href="../classes/FrameLayout.html">FrameLayout</a></li>
+                <li><a class="type" href="../classes/Gallery.html">Gallery</a></li>
+                <li><a class="type" href="../classes/HorizontalScrollView.html">HorizontalScrollView</a></li>
+                <li><a class="type" href="../classes/ImageButton.html">ImageButton</a></li>
+                <li><a class="type" href="../classes/ImageView.html">ImageView</a></li>
+                <li><a class="type" href="../classes/LayoutParams.html">LayoutParams</a></li>
+                <li><a class="type" href="../classes/LinearLayout.html">LinearLayout</a></li>
+                <li><a class="type" href="../classes/MeasureSpec.html">MeasureSpec</a></li>
+                <li><a class="type" href="../classes/MotionEvent.html">MotionEvent</a></li>
+                <li><a class="type" href="../classes/MRadioButton.html">MRadioButton</a></li>
+                <li><a class="type" href="../classes/MRadioGroup.html">MRadioGroup</a></li>
+                <li><a class="type" href="../classes/MToggleButton.html">MToggleButton</a></li>
+                <li><a class="type" href="../classes/Rect.html">Rect</a></li>
+                <li><a class="type" href="../classes/ScrollView.html">ScrollView</a></li>
+                <li><a class="type" href="../classes/TextView.html">TextView</a></li>
+                <li><a class="type" href="../classes/VelocityTracker.html">VelocityTracker</a></li>
+                <li><a class="type" href="../classes/View.html">View</a></li>
+                <li><a class="type" href="../classes/ViewGroup.html">ViewGroup</a></li>
+                <li><a class="type" href="../classes/WebView.html">WebView</a></li>
+              </ul>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div id="docs-main" class="apidocs">
+          <div class="content container">
+            <h1>VelocityTracker Class</h1>
+            <div class="box meta">
+            
+            
+                    <div class="foundat">
+                        Defined in: <a href="../files/jndroid.core.js.html#l486"><code>jndroid.core.js:486</code></a>
+                    </div>
+            
+                <!--  -->
+            
+            </div>
+            
+            <!--  -->
+            
+            <div class="box intro">
+                <p>Helper for tracking the velocity of touch events, for implementing
+            flinging and other such gestures.</p>
+            
+            </div>
+            
+            <!-- Class member index -->
+            
+            <a name="index" class="anchor-link"></a>
+            <div class="index">
+            <h2>Index</h2>
+            
+                <!-- <div id="api-options"> -->
+                <!--     Show: -->
+                <!--     <label for="api-show-inherited"> -->
+                <!--         <input type="checkbox" id="api-show-inherited"> -->
+                <!--         Inherited -->
+                <!--     </label> -->
+            
+                <!--     <label for="api-show-protected"> -->
+                <!--         <input type="checkbox" id="api-show-protected"> -->
+                <!--         Protected -->
+                <!--     </label> -->
+            
+                <!--     <label for="api-show-private"> -->
+                <!--         <input type="checkbox" id="api-show-private"> -->
+                <!--         Private -->
+                <!--     </label> -->
+                <!--     <label for="api-show-deprecated"> -->
+                <!--         <input type="checkbox" id="api-show-deprecated"> -->
+                <!--         Deprecated -->
+                <!--     </label> -->
+            
+                <!-- </div> -->
+            
+            
+            
+            
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+            
+                    <table class="index-list methods">
+                          <tr>
+                            <th colspan="12">Methods index</th>
+                          </tr>
+                        <!--  -->
+                        
+                        <tr>
+                          <td colspan="3" class="methods-return">
+                            void
+                          </td>
+                          <td colspan="9" class="methods-info">
+                            <nobr> <a href="#method_addMovement">addMovement(<span class="index-param">event</span>)</a></nobr>
+                           <div class="desc">
+                             <p>Add a user's movement to the tracker.</p>
+            
+                           </div>
+                          </td>
+                        </tr>
+                            <!-- <li class="index-item method"> -->
+                            <!--     <a href="#method_addMovement">addMovement</a> -->
+            
+                            <!--      -->
+                            <!--      -->
+                            <!-- </li> -->
+                        <tr>
+                          <td colspan="3" class="methods-return">
+                            void
+                          </td>
+                          <td colspan="9" class="methods-info">
+                            <nobr> <a href="#method_computeCurrentVelocity">computeCurrentVelocity(<span class="index-param">units</span><span class="index-param">maxVelocity</span>)</a></nobr>
+                           <div class="desc">
+                             <p>Compute the current velocity based on the points that have been
+            collected.  Only call this when you actually want to retrieve velocity
+            information, as it is relatively expensive.  You can then retrieve</p>
+            
+                           </div>
+                          </td>
+                        </tr>
+                            <!-- <li class="index-item method"> -->
+                            <!--     <a href="#method_computeCurrentVelocity">computeCurrentVelocity</a> -->
+            
+                            <!--      -->
+                            <!--      -->
+                            <!-- </li> -->
+                        <tr>
+                          <td colspan="3" class="methods-return">
+                            
+                          </td>
+                          <td colspan="9" class="methods-info">
+                            <nobr> <a href="#method_getXVelocity">getXVelocity()</a></nobr>
+                           <div class="desc">
+                             <p>Retrieve the last computed X velocity.  You must first call</p>
+            
+                           </div>
+                          </td>
+                        </tr>
+                            <!-- <li class="index-item method"> -->
+                            <!--     <a href="#method_getXVelocity">getXVelocity</a> -->
+            
+                            <!--      -->
+                            <!--      -->
+                            <!-- </li> -->
+                        <tr>
+                          <td colspan="3" class="methods-return">
+                            
+                          </td>
+                          <td colspan="9" class="methods-info">
+                            <nobr> <a href="#method_getYVelocity">getYVelocity()</a></nobr>
+                           <div class="desc">
+                             <p>Retrieve the last computed Y velocity.  You must first call</p>
+            
+                           </div>
+                          </td>
+                        </tr>
+                            <!-- <li class="index-item method"> -->
+                            <!--     <a href="#method_getYVelocity">getYVelocity</a> -->
+            
+                            <!--      -->
+                            <!--      -->
+                            <!-- </li> -->
+                    </table>
+                </div>
+            
+            <!--  -->
+            <!-- </div> -->
+            
+            
+            <div class="class-detail">
+            
+            
+            
+            
+                <div class="methods-detail">
+                    <h2>Methods</h2>
+            
+                        <a name="method_addMovement" class="anchor-link"></a>
+                        <div class="method item">
+                            <h3 class="name"><code>addMovement</code>
+                        
+                                <div class="args">
+                                    <span class="paren">(</span><ul class="args-list inline commas">
+                                        <li class="arg">
+                                                <code>event</code>
+                                        </li>
+                                    </ul><span class="paren">)</span>
+                                </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            </h3>
+                        
+                            <!-- <div class="meta"> -->
+                                <!--  -->
+                                <!--      -->
+                                <!--          -->
+                                <!--         <p> -->
+                                <!--          -->
+                                <!--         Defined in -->
+                                <!--          -->
+                                <!--      -->
+                                <!--  -->
+                                <!--  -->
+                                <!-- <a href="../files/jndroid.core.js.html#l505"><code>jndroid.core.js:505</code></a> -->
+                                <!--  -->
+                                <!-- </p> -->
+                        
+                        
+                                <!--  -->
+                        
+                                <!--  -->
+                            <!-- </div> -->
+                        
+                            <div class="extended-detail">
+                        
+                                <div class="description">
+                                    <p>Add a user's movement to the tracker.</p>
+                        
+                                </div>
+                        
+                                    <div class="params">
+                                        <h4>Parameters:</h4>
+                        
+                                        <ul class="params-list">
+                                            <li class="param">
+                                                    <code class="param-name">event</code>
+                                                    <span class="type">Object</span>
+                        
+                        
+                                                <div class="param-description">
+                                                    <p>The MotionEvent you received and would like to track.</p>
+                        
+                                                </div>
+                        
+                                            </li>
+                                        </ul>
+                                    </div>
+                        
+                        
+                            </div>
+                        </div>
+                        <a name="method_computeCurrentVelocity" class="anchor-link"></a>
+                        <div class="method item">
+                            <h3 class="name"><code>computeCurrentVelocity</code>
+                        
+                                <div class="args">
+                                    <span class="paren">(</span><ul class="args-list inline commas">
+                                        <li class="arg">
+                                                <code>units</code>
+                                        </li>
+                                        <li class="arg">
+                                                <code>maxVelocity</code>
+                                        </li>
+                                    </ul><span class="paren">)</span>
+                                </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            </h3>
+                        
+                            <!-- <div class="meta"> -->
+                                <!--  -->
+                                <!--      -->
+                                <!--          -->
+                                <!--         <p> -->
+                                <!--          -->
+                                <!--         Defined in -->
+                                <!--          -->
+                                <!--      -->
+                                <!--  -->
+                                <!--  -->
+                                <!-- <a href="../files/jndroid.core.js.html#l525"><code>jndroid.core.js:525</code></a> -->
+                                <!--  -->
+                                <!-- </p> -->
+                        
+                        
+                                <!--  -->
+                        
+                                <!--  -->
+                            <!-- </div> -->
+                        
+                            <div class="extended-detail">
+                        
+                                <div class="description">
+                                    <p>Compute the current velocity based on the points that have been
+                        collected.  Only call this when you actually want to retrieve velocity
+                        information, as it is relatively expensive.  You can then retrieve</p>
+                        
+                                </div>
+                        
+                                    <div class="params">
+                                        <h4>Parameters:</h4>
+                        
+                                        <ul class="params-list">
+                                            <li class="param">
+                                                    <code class="param-name">units</code>
+                                                    <span class="type">Object</span>
+                        
+                        
+                                                <div class="param-description">
+                                                    <p>The units you would like the velocity in.  A value of 1
+                        provides pixels per millisecond, 1000 provides pixels per second, etc.</p>
+                        
+                                                </div>
+                        
+                                            </li>
+                                            <li class="param">
+                                                    <code class="param-name">maxVelocity</code>
+                                                    <span class="type">Object</span>
+                        
+                        
+                                                <div class="param-description">
+                                                    <p>The maximum velocity that can be computed by this method.
+                        This value must be declared in the same unit as the units parameter. This value
+                        must be positive.</p>
+                        
+                                                </div>
+                        
+                                            </li>
+                                        </ul>
+                                    </div>
+                        
+                        
+                            </div>
+                        </div>
+                        <a name="method_getXVelocity" class="anchor-link"></a>
+                        <div class="method item">
+                            <h3 class="name"><code>getXVelocity</code>
+                        
+                                <span class="paren">()</span>
+                        
+                                <span class="returns-inline">
+                                    <span class="type"></span>
+                                </span>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            </h3>
+                        
+                            <!-- <div class="meta"> -->
+                                <!--  -->
+                                <!--      -->
+                                <!--          -->
+                                <!--         <p> -->
+                                <!--          -->
+                                <!--         Defined in -->
+                                <!--          -->
+                                <!--      -->
+                                <!--  -->
+                                <!--  -->
+                                <!-- <a href="../files/jndroid.core.js.html#l556"><code>jndroid.core.js:556</code></a> -->
+                                <!--  -->
+                                <!-- </p> -->
+                        
+                        
+                                <!--  -->
+                        
+                                <!--  -->
+                            <!-- </div> -->
+                        
+                            <div class="extended-detail">
+                        
+                                <div class="description">
+                                    <p>Retrieve the last computed X velocity.  You must first call</p>
+                        
+                                </div>
+                        
+                        
+                                    <div class="returns">
+                                        <h4>Returns:</h4>
+                        
+                                        <div class="returns-description">
+                                                <p>The previously computed X velocity.</p>
+                        
+                                        </div>
+                                    </div>
+                        
+                            </div>
+                        </div>
+                        <a name="method_getYVelocity" class="anchor-link"></a>
+                        <div class="method item">
+                            <h3 class="name"><code>getYVelocity</code>
+                        
+                                <span class="paren">()</span>
+                        
+                                <span class="returns-inline">
+                                    <span class="type"></span>
+                                </span>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            </h3>
+                        
+                            <!-- <div class="meta"> -->
+                                <!--  -->
+                                <!--      -->
+                                <!--          -->
+                                <!--         <p> -->
+                                <!--          -->
+                                <!--         Defined in -->
+                                <!--          -->
+                                <!--      -->
+                                <!--  -->
+                                <!--  -->
+                                <!-- <a href="../files/jndroid.core.js.html#l565"><code>jndroid.core.js:565</code></a> -->
+                                <!--  -->
+                                <!-- </p> -->
+                        
+                        
+                                <!--  -->
+                        
+                                <!--  -->
+                            <!-- </div> -->
+                        
+                            <div class="extended-detail">
+                        
+                                <div class="description">
+                                    <p>Retrieve the last computed Y velocity.  You must first call</p>
+                        
+                                </div>
+                        
+                        
+                                    <div class="returns">
+                                        <h4>Returns:</h4>
+                        
+                                        <div class="returns-description">
+                                                <p>The previously computed Y velocity.</p>
+                        
+                                        </div>
+                                    </div>
+                        
+                            </div>
+                        </div>
+            
+                    <div class="no-visible-items-message">
+                        <p>There are no methods that match your current filter settings. You can change your filter settings in the index section on this page. <a href="#index" class="index-jump-link">index</a></p>
+                    </div>
+            
+                </div>
+            
+            
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <script src="../assets/vendor/prettify/prettify-min.js"></script>
+    <script>prettyPrint();</script>
+    <script src="../assets/vendor/jquery.min.js"></script>
+    <script src="../assets/js/jquery-offscreen-trigger.js"></script>
+    <script src="../assets/js/yui-prettify.js"></script>
+    <script src="../assets/../api.js"></script>
+    <script src="../assets/js/api-filter.js"></script>
+    <script src="../assets/js/api-list.js"></script>
+    <script src="../assets/js/api-search.js"></script>
+    <script src="../assets/js/apidocs.js"></script>
+  </body>
+</html>

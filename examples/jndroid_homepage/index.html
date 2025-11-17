@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>Jndroid</title>
+
+    <!-- Jndroid libraries -->
+    <script src="../../src/jndroid.core.js"></script>
+    <script src="../../src/jndroid.animation.js"></script>
+    <script src="../../src/jndroid.widget.js"></script>
+    <script src="../../src/jndroid.layout.js"></script>
+    <script src="../../src/jndroid.mwidget.js"></script>
+    <script src="../../src/ListView.js"></script>
+    <!--<script src="http://file.gtbrowser.cn/jndroid/jndroid.min.js"></script>-->
+
+    <link rel="shortcut icon" href="images/title_logo.png" type="image/x-icon" />
+</head>
+<body>
+<script>
+    function Splash() {
+        FrameLayout.apply(this);
+        this.setBg(0xfff3f3f3);
+
+        var group = new ViewGroup();
+        var track = new View();
+        track.setBg(0x33000000);
+        group.addView(track);
+        var bar = new View();
+        bar.setBg(0xff1499f7);
+        group.addView(bar);
+
+        var text = new View();
+        text.setText("0%");
+        text.setTextSize(14);
+        text.setTextColor(0xff1499f7);
+        text.setStyle("textAlign", "center");
+        group.addView(text);
+
+        group.onMeasure = function() {
+            track.measure(100, 2);
+            bar.measure(0, 2);
+            text.measure(100, 20);
+            this.setMeasuredDimension(100, 32);
+        };
+        group.onLayout = function() {
+            track.layout(0, 30);
+            bar.layout(0, 30);
+            text.layout(0, 0);
+        };
+
+        var lp = new LayoutParams(100, 32);
+        lp.gravity = Gravity.CENTER;
+        this.addView(group, lp);
+
+        this.setProgress = function(p) {
+            bar.measure(100 * p, 2);
+            text.setText(Math.floor(100 * p) + "%");
+        }
+    }
+
+    var mSplash = new Splash();
+    setContentView(mSplash);
+</script>
+<script>
+    includeJs("scripts/configs.js");
+    includeJs("scripts/main.js");
+    includeJs("scripts/StateFrameLayout.js");
+    includeJs("scripts/Theme.js");
+    includeJs("scripts/Tab.js");
+    includeJs("scripts/Menu.js");
+    includeJs("scripts/IntroView.js");
+    includeJs("scripts/Titlebar.js");
+    includeJs("scripts/Playground.js");
+    includeJs("scripts/VSAndroidView.js");
+    includeJs("scripts/DocView.js");
+    includeJs("scripts/AboutView.js");
+    includeJs("scripts/AppView.js");
+    includeJs("scripts/SettingView.js");
+
+    window.onJSProgressChanged = function(p) {
+        requestAnimationFrame(function() {
+            mSplash.setProgress(p);
+        });
+    };
+
+    window.onCreate = function() {
+        mSplash.setProgress(1);
+
+        Manifest.setIsPhone(window.innerWidth < 720);
+
+        setTimeout(function() {
+            var rootview = new FrameLayout();
+            setContentView(rootview);
+
+            var mainView = new MainView();
+            mainView.div.style.fontWeight = "300";
+            try {
+                var lang = getLocale();
+                if (lang.indexOf("zh") >= 0) {
+                    getRootView().setFontFamily("微软雅黑");
+                } else {
+                    getRootView().setFontFamily("Roboto, sans-serif");
+                }
+            } catch(e) {
+                console.log(e);
+            }
+            rootview.addView(mainView);
+        }, 0);
+
+    };
+</script>
+</body>
+</html>
