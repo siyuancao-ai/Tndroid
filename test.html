@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Jndroid Test</title>
+    
+    <!-- Jndroid library -->
+    <script src="./dist/jndroid.umd.js"></script>
+</head>
+<body>
+<script>
+    // 测试Jndroid是否正常工作
+    function MainView() {
+        FrameLayout.apply(this);
+        this.setBg(0xfff3f3f3);
+
+        var textView = new TextView();
+        textView.setText("Hello, Jndroid!");
+        textView.setTextSize(24);
+        textView.setTextColor(0xff000000);
+        textView.setStyle("textAlign", "center");
+
+        var lp = new LayoutParams(LayoutParams.MP, LayoutParams.MP);
+        lp.gravity = Gravity.CENTER;
+        this.addView(textView, lp);
+    }
+
+    var mainView = new MainView();
+    setContentView(mainView);
+</script>
+</body>
+</html>

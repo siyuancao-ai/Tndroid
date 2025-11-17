@@ -9,47 +9,50 @@
  *
  * @class ScrollView
  */
+// 导入必要的工具类
+import { Utils, MS } from './tndroid.core';
+
 function ScrollView() {
     FrameLayout.apply(this);
 
     this.setTag("ScrollView");
 
-    var self = this;
-    var inDragging = false;
-    var lastX = 0;
-    var lastY = 0;
-    var vTracker = null;
-    var touchSlop = 5;
-    var yProcessor = new FlingProcessor();
-    var xProcessor = new FlingProcessor();
-    var maxV = 5000;
-    var minV = 50;
-    var listeners = [];
-    var xScrollEnd = true;
-    var yScrollEnd = true;
-    var scrollEndListener = null;
-    var yScrollable = false;
-    var xScrollable = false;
-    var rollPadding = 0.6;
+    const self = this;
+    let inDragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    let vTracker = null;
+    const touchSlop = 5;
+    const yProcessor = new FlingProcessor();
+    const xProcessor = new FlingProcessor();
+    const maxV = 5000;
+    const minV = 50;
+    const listeners = [];
+    let xScrollEnd = true;
+    let yScrollEnd = true;
+    let scrollEndListener = null;
+    let yScrollable = false;
+    let xScrollable = false;
+    const rollPadding = 0.6;
 
-    var logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAhtJREFUWEfF1jEoRVEcx/GnFINJyWAwkLIbLMompSSLQYw2KYsuo0Upq9GiDAbJohSDwWIzWA2MJpkUv+/tnNu55/2vd/HeMXx69/zvPed/7v+ce2hkWfavzGBKZjAlM5iSGUzJDKZkBlMygx0yJaNRrOMTGJRh6ZN16ZXSM6VGm/TLihzIkZzKoRzLqnRL8XzYsR0m5ERu5UquXZsJXbr2vBR9ws5/RXKSkPjc4XpJ9oR7oBrFUsSDUJ5FmQlidQwIpQ6T87bbwtpzHcanJe8bD7Qs93InCy7WSpfwhmES/6Zr7trHcSMbkvePB9sV3oJObKAeiZ+JbUqcnL4koX3hfj2e3ZG8fzwYN3wZGajpuw2wjlsSJicZu50XOXNtf8/j+coKsFtfhORMhI0VPwPilDhMDvYBb8+1lRz0mZN8rHhgvuEneXW/VIQqDMm48Amx3kwu3HChqsTw9zigzAmAsn6Kn4TvTFWYfVXiOjgfivIjTOxxbPIlvItfDmuwn2IcDiWqXOQLE4cmhQowiQdhba1B66L0VI9xS7lKjQjnwJswCUr320n4pSsdwV5TIDIrz/IhHE5Mgs/LSmQhMW9febKawciIkJhJsCfYhLSrJuPLDf4ijok1bs4MVqAaJGQSeBSqwvKQzP8yCT7V4rz/jhlsgX8w+AvHacdhhH3hSKbUnBlWP5MZTMkMpmQGUzKDKZnBlMxgOlnjC8iWeCBJqa/CAAAAAElFTkSuQmCC";
+    const logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAhtJREFUWEfF1jEoRVEcx/GnFINJyWAwkLIbLMompSSLQYw2KYsuo0Upq9GiDAbJohSDwWIzWA2MJpkUv+/tnNu55/2vd/HeMXx69/zvPed/7v+ce2hkWfavzGBKZjAlM5iSGUzJDKZkBlMygx0yJaNRrOMTGJRh6ZN16ZXSM6VGm/TLihzIkZzKoRzLqnRL8XzYsR0m5ERu5UquXZsJXbr2vBR9ws5/RXKSkPjc4XpJ9oR7oBrFUsSDUJ5FmQlidQwIpQ6T87bbwtpzHcanJe8bD7Qs93InCy7WSpfwhmES/6Zr7trHcSMbkvePB9sV3oJObKAeiZ+JbUqcnL4koX3hfj2e3ZG8fzwYN3wZGajpuw2wjlsSJicZu50XOXNtf8/j+coKsFtfhORMhI0VPwPilDhMDvYBb8+1lRz0mZN8rHhgvuEneXW/VIQqDMm48Amx3kwu3HChqsTw9zigzAmAsn6Kn4TvTFWYfVXiOjgfivIjTOxxbPIlvItfDmuwn2IcDiWqXOQLE4cmhQowiQdhba1B66L0VI9xS7lKjQjnwJswCUr320n4pSsdwV5TIDIrz/IhHE5Mgs/LSmQhMW9febKawciIkJhJsCfYhLSrJuPLDf4ijok1bs4MVqAaJGQSeBSqwvKQzP8yCT7V4rz/jhlsgX8w+AvHacdhhH3hSKbUnBlWP5MZTMkMpmQGUzKDKZnBlMxgOlnjC8iWeCBJqa/CAAAAAElFTkSuQmCC";
 
-    var jndroid = document.createElement("div");
-    jndroid.style.width = "100%";
-    jndroid.style.height = "80px";
-    jndroid.style.fontSize = "14px";
-    jndroid.style.color = Utils.toCssColor(0x66000000);
-    jndroid.style.lineHeight = "80px";
-    jndroid.style.textAlign = "center";
-    var img = document.createElement("img");
+    const Tndroid = document.createElement("div");
+    Tndroid.style.width = "100%";
+    Tndroid.style.height = "80px";
+    Tndroid.style.fontSize = "14px";
+    Tndroid.style.color = Utils.toCssColor(0x66000000);
+    Tndroid.style.lineHeight = "80px";
+    Tndroid.style.textAlign = "center";
+    const img = document.createElement("img");
     img.src = logo;
     img.style.width = "20px";
     img.style.height = "20px";
     img.style.verticalAlign = "text-bottom";
-    jndroid.appendChild(img);
-    jndroid.appendChild(document.createTextNode(" 由Jndroid提供技术支持"));
+    Tndroid.appendChild(img);
+    Tndroid.appendChild(document.createTextNode(" 由Tndroid提供技术支持"));
 
-    this.div.appendChild(jndroid);
+    this.div.appendChild(Tndroid);
 
     this.checkScrollable = function() {
         if (this.getChildCount() == 0) {
@@ -79,12 +82,12 @@ function ScrollView() {
             yProcessor.forceFinished(true);
         }
         if (yScrollable) {
-            var y = self.getScrollY() + e.deltaY;
+            let y = self.getScrollY() + e.deltaY;
             y = Math.max(y, 0);
             y = Math.min(y, self.getChildAt(0).getMH() - self.getMH());
             self.scrollTo(self.getScrollX(), y);
         } else {
-            var x = self.getScrollX() + e.deltaX;
+            let x = self.getScrollX() + e.deltaX;
             x = Math.max(x, 0);
             x = Math.min(x, self.getChildAt(0).getMW() - self.getMW());
             self.scrollTo(x, self.getScrollY());
@@ -92,8 +95,8 @@ function ScrollView() {
     };
 
     this.scrollToWidthRange = function(x, y) {
-        var rangeV = getYRange();
-        var rangeH = getXRange();
+        const rangeV = getYRange();
+        const rangeH = getXRange();
         x = Math.max(0, x);
         x = Math.min(x, rangeV);
         y = Math.max(0, y);
@@ -107,7 +110,7 @@ function ScrollView() {
             y = 0;
         }
         y = Math.round(y);
-        var oldX, oldY;
+        let oldX, oldY;
         oldX = this.getScrollX();
         oldY = this.getScrollY();
         if (x == oldX && y == oldY) {
@@ -118,7 +121,7 @@ function ScrollView() {
         if (self.getChildCount() > 0) {
             self.getChildAt(0).translate3d(-x, -y);
         }
-        for (var i = 0; i < listeners.length; i++) {
+        for (let i = 0; i < listeners.length; i++) {
             listeners[i].call(self, x, oldX, y, oldY);
         }
     };
@@ -135,7 +138,7 @@ function ScrollView() {
 
         this.checkScrollable();
 
-        var action = e.getAction();
+        const action = e.getAction();
         if ((action == ME.ACTION_MOVE) && (inDragging)) {
             return true;
         }
@@ -154,10 +157,10 @@ function ScrollView() {
                 break;
             }
             case ME.ACTION_MOVE: {
-                var x = e.getX();
-                var y = e.getY();
-                var xDiff = Math.abs(x - lastX);
-                var yDiff = Math.abs(y - lastY);
+                const x = e.getX();
+                const y = e.getY();
+                const xDiff = Math.abs(x - lastX);
+                const yDiff = Math.abs(y - lastY);
 
                 if (((yDiff > xDiff && yDiff > touchSlop) && yScrollable)
                     || ((xDiff > yDiff && xDiff > touchSlop) && xScrollable)) {
@@ -165,7 +168,7 @@ function ScrollView() {
 
                     initVTracker();
                     vTracker.addMovement(e);
-                    var p = this.getParent();
+                    const p = this.getParent();
                     p.requestDisallowInterceptTouchEvent(true);
 
                     if (this.getScrollX() >= getXRange() && x < lastX) {
@@ -196,7 +199,7 @@ function ScrollView() {
             return false;
         }
 
-        var action = ev.getAction();
+        const action = ev.getAction();
 
         switch (action) {
             case ME.ACTION_DOWN: {
@@ -217,10 +220,10 @@ function ScrollView() {
                 break;
             }
             case ME.ACTION_MOVE:
-                var x = ev.getX();
-                var y = ev.getY();
-                var deltaX = lastX - x;
-                var deltaY = lastY - y;
+                const x = ev.getX();
+                const y = ev.getY();
+                let deltaX = lastX - x;
+                let deltaY = lastY - y;
 
                 if (xScrollable) {
                     if (!inDragging && Math.abs(deltaX) > touchSlop) {
@@ -262,8 +265,8 @@ function ScrollView() {
                 if (inDragging) {
                     vTracker.computeCurrentVelocity(1000);
 
-                    var vX = 0;
-                    var vY = 0;
+                    let vX = 0;
+                    let vY = 0;
                     if (xScrollable) {
                         vX = getVelocityRange(vTracker.getXVelocity());
                         if (this.getScrollX() > 0 && this.getScrollX() < getXRange()) {
@@ -301,16 +304,16 @@ function ScrollView() {
 
     this.onAfterMeasure = function() {
         if (this.getChildCount() > 0) {
-            var c = this.getChildAt(0);
-            var h = this.getMH();
-            var chMS = MS.makeMS(c.getMH(), MS.EXACTLY);
-            var cwMS = MS.makeMS(c.getMW(), MS.EXACTLY);
+            const c = this.getChildAt(0);
+            let h = this.getMH();
+            let chMS = MS.makeMS(c.getMH(), MS.EXACTLY);
+            let cwMS = MS.makeMS(c.getMW(), MS.EXACTLY);
             if (c.getMH() < h) {
                 h -= this.getPT();
                 h -= this.getPB();
                 chMS = MS.makeMS(h, MS.EXACTLY);
             }
-            var w = this.getMW();
+            let w = this.getMW();
             if (c.getMW() < w) {
                 w -= this.getPL();
                 w -= this.getPR();
@@ -321,10 +324,10 @@ function ScrollView() {
     };
 
     this.computeScroll = function() {
-        var xResult = xProcessor.computeProcessOffset();
-        var yResult = yProcessor.computeProcessOffset();
-        var x = this.getScrollX();
-        var y = this.getScrollY();
+        const xResult = xProcessor.computeProcessOffset();
+        const yResult = yProcessor.computeProcessOffset();
+        let x = this.getScrollX();
+        let y = this.getScrollY();
         if (yResult || xResult) {
             if (xResult) {
                 x = xProcessor.getCurrProcess();
@@ -338,22 +341,22 @@ function ScrollView() {
     };
 
     function myScrollBy(dx, dy) {
-        var xRange = getXRange();
+        const xRange = getXRange();
         if (self.getScrollX() < 0 || self.getScrollX() > xRange) {
             dx = dx * rollPadding;
         }
-        var yRange = getYRange();
+        const yRange = getYRange();
         if (self.getScrollY() < 0 || self.getScrollY() > yRange) {
             dy = dy * rollPadding;
         }
 
-        var x = self.getScrollX() + dx;
-        var xRollPadding = self.getMW() * rollPadding;
+        let x = self.getScrollX() + dx;
+        const xRollPadding = self.getMW() * rollPadding;
         x = Math.min(x, xRange + xRollPadding);
         x = Math.max(x, -xRollPadding);
 
-        var y = self.getScrollY() + dy;
-        var yRollPadding = self.getMH() * rollPadding;
+        let y = self.getScrollY() + dy;
+        const yRollPadding = self.getMH() * rollPadding;
         y = Math.min(y, yRange + yRollPadding);
         y = Math.max(y, -yRollPadding);
 
@@ -361,7 +364,7 @@ function ScrollView() {
     }
 
     function getYRange() {
-        var range = 0;
+        let range = 0;
         if (self.getChildCount() > 0) {
             range = Math.max(0, self.getChildAt(0).getHeight() - (self.getHeight() - self.getPB() - self.getPT()));
         }
@@ -369,7 +372,7 @@ function ScrollView() {
     }
 
     function getXRange() {
-        var range = 0;
+        let range = 0;
         if (self.getChildCount() > 0) {
             range = Math.max(0, self.getChildAt(0).getWidth() - (self.getWidth() - self.getPL() - self.getPR()));
         }
@@ -390,8 +393,8 @@ function ScrollView() {
     this.flingX = function(vX) {
         if (self.getChildCount() > 0) {
             if (xScrollable && vX != 0) {
-                var w = self.getWidth() - self.getPR() - self.getPL();
-                var right = self.getChildAt(0).getWidth() - w;
+                const w = self.getWidth() - self.getPR() - self.getPL();
+                const right = self.getChildAt(0).getWidth() - w;
 
                 xProcessor.fling(self.getScrollX(), vX / 500, 0, right);
                 xScrollEnd = false;
@@ -407,8 +410,8 @@ function ScrollView() {
     this.flingY = function(vY) {
         if (self.getChildCount() > 0) {
             if (yScrollable && vY != 0) {
-                var height = self.getHeight() - self.getPaddingBottom() - self.getPT();
-                var bottom = self.getChildAt(0).getHeight() - height;
+                const height = self.getHeight() - self.getPaddingBottom() - self.getPT();
+                const bottom = self.getChildAt(0).getHeight() - height;
 
                 yProcessor.fling(self.getScrollY(), vY / 500, 0, bottom);
                 yScrollEnd = false;
@@ -432,11 +435,11 @@ function ScrollView() {
     function endDrag() {
         inDragging = false;
 
-        var scrollEnd = true;
-        var maxScroll = Math.min(self.getMW(), self.getMH()) * rollPadding;
+        let scrollEnd = true;
+        const maxScroll = Math.min(self.getMW(), self.getMH()) * rollPadding;
         if (xScrollable) {
-            var xRange = getXRange();
-            var scrollX = self.getScrollX();
+            const xRange = getXRange();
+            const scrollX = self.getScrollX();
             if (scrollX < 0) {
                 xProcessor.flingDistance(scrollX, scrollX, -maxScroll, 0);
                 xScrollEnd = false;
@@ -457,8 +460,8 @@ function ScrollView() {
         }
 
         if (yScrollable) {
-            var yRange = getYRange();
-            var scrollY = self.getScrollY();
+            const yRange = getYRange();
+            const scrollY = self.getScrollY();
             if (scrollY < 0) {
                 yProcessor.flingDistance(scrollY, scrollY, -maxScroll, 0);
                 yScrollEnd = false;
@@ -491,22 +494,22 @@ function ScrollView() {
     function FlingProcessor() {
         Processor.apply(this);
 
-        var a = 0.0015;
-        var isFinished = true;
-        var startTime = 0;
-        var start;
-        var v = 0;
-        var absV = 0;
-        var absCurV = 0;
-        var maxTime = 0;
-        var min = 0;
-        var max = 0;
-        var cur = 0;
+        const a = 0.0015;
+        let isFinished = true;
+        let startTime = 0;
+        let start;
+        let v = 0;
+        let absV = 0;
+        let absCurV = 0;
+        let maxTime = 0;
+        let min = 0;
+        let max = 0;
+        let cur = 0;
 
-        var listener = null;
+        let listener = null;
 
         this.flingDistance = function(start, distance, min, max) {
-            var v = 0;
+            let v = 0;
             if (distance < 0) {
                 v = Math.sqrt(2 * -distance * a);
             } else {
@@ -533,10 +536,10 @@ function ScrollView() {
                 return false;
             }
 
-            var t = (new Date()).getTime() - startTime;
+            let t = (new Date()).getTime() - startTime;
             t = Math.min(t, maxTime);
             t = Math.max(t, 1);
-            var d = absV * t - a * t * t / 2;
+            const d = absV * t - a * t * t / 2;
             if (v > 0) {
                 cur = start + d;
             } else {
@@ -586,15 +589,15 @@ function ScrollView() {
 function ScrollBar(scrollView) {
     ViewGroup.apply(this);
 
-    var width = 16;
+    const width = 16;
 
-    var self = this;
+    const self = this;
 
-    var thumbH = 0;
+    let thumbH = 0;
 
-    var scrollChild = scrollView.getChildAt(0);
+    const scrollChild = scrollView.getChildAt(0);
 
-    var thumb = new View();
+    const thumb = new View();
     thumb.setBg(0x45000000);
     thumb.setCornerSize(2);
     thumb.setBorder(1, 0x99ffffff);
@@ -603,30 +606,30 @@ function ScrollBar(scrollView) {
     this.setBg(0x10000000);
 
     scrollView.addScrollChangedListener(function(t, oldt) {
-        var h = this.getMH();
+        const h = this.getMH();
 
         this.postDelayed(updateThumbSize, 1000);
         updateThumbSize();
 
-        var process = t / (scrollChild.getMH() - h);
-        var y = process * (h - thumbH);
+        const process = t / (scrollChild.getMH() - h);
+        const y = process * (h - thumbH);
         thumb.layout(0, y);
     });
 
     this.onTouchEvent = function(e) {
-        var trackLength = this.getMH() - thumbH;
-        var y = e.getY() - thumbH / 2;
+        const trackLength = this.getMH() - thumbH;
+        let y = e.getY() - thumbH / 2;
         y = Math.max(y, 0);
         y = Math.min(y, trackLength);
         thumb.layout(0, y);
 
-        var processor = scrollView.getProcessor();
+        const processor = scrollView.getProcessor();
         if (!processor.isFinished()) {
             processor.forceFinished(true);
         }
 
-        var p = y / trackLength;
-        var t = (scrollChild.getMH() - this.getMH()) * p;
+        const p = y / trackLength;
+        const t = (scrollChild.getMH() - this.getMH()) * p;
         scrollView.scrollTo(t);
     };
 
@@ -639,7 +642,7 @@ function ScrollBar(scrollView) {
     };
 
     function updateThumbSize() {
-        var h = self.getMH();
+        const h = self.getMH();
         thumbH = h / scrollChild.getMH() * h;
         thumbH = Math.max(32, thumbH);
         thumb.measure(width, thumbH);
@@ -660,14 +663,14 @@ function ScrollBar(scrollView) {
 function ImageView() {
     ViewGroup.apply(this);
 
-    var self = this;
-    var src = null;
-    var img = null;
-    var scaleType = ScaleType.CENTER;
-    var customWidth = 0;
-    var customHeight = 0;
-    var scaleTimeout = 0;
-    var loadedListener = null;
+    const self = this;
+    let src = null;
+    let img = null;
+    let scaleType = ScaleType.CENTER;
+    let customWidth = 0;
+    let customHeight = 0;
+    let scaleTimeout = 0;
+    let loadedListener = null;
 
     this.setLoadedListener = function(l) {
         loadedListener = l;
@@ -744,8 +747,8 @@ function ImageView() {
 
     this.scale = function() {
         if (img != null) {
-            var nw = img.naturalWidth;
-            var nh = img.naturalHeight;
+            const nw = img.naturalWidth;
+            const nh = img.naturalHeight;
             if (nw == 0 || nh == 0) {
                 scaleTimeout = setTimeout(this.scale, 200);
                 img.onload = self.scaleInner;
@@ -758,16 +761,16 @@ function ImageView() {
     };
 
     this.scaleInner = function() {
-        var nw = img.naturalWidth;
-        var nh = img.naturalHeight;
-        var width = self.getWidth();
-        var height = self.getHeight();
+        const nw = img.naturalWidth;
+        const nh = img.naturalHeight;
+        const width = self.getWidth();
+        const height = self.getHeight();
         if (customWidth != 0) {
-            var h = customWidth * nh / nw;
+            const h = customWidth * nh / nw;
             self.setStyleWidth(customWidth);
             self.setStyleHeight(h);
         } else if (customHeight != 0) {
-            var w = customHeight * nw / nh;
+            const w = customHeight * nw / nh;
             self.setStyleWidth(w);
             self.setStyleHeight(customHeight);
         } else if (scaleType == ScaleType.CENTER) {
@@ -826,8 +829,8 @@ function LiteImageView() {
     this.div.style.verticalAlign = "middle";
     this.div.style.position = "absolute";
 
-    var self = this;
-    var src = null;
+    const self = this;
+    let src = null;
 
     this.setImageUri = function(src) {
         this.setImgSrc(src);
@@ -844,8 +847,8 @@ function LiteImageView() {
     };
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
+        const w = MS.getSize(wMS);
+        const h = MS.getSize(hMS);
 
         this.div.style.width = w + "px";
         this.div.style.height = h + "px";
@@ -872,10 +875,10 @@ function ImageButton() {
 function TextView() {
     ViewGroup.apply(this);
 
-    var gravity = 0;
-    var textSize = 12;
-    var singleLine = false;
-    var cnt = document.createElement("div");
+    let gravity = 0;
+    let textSize = 12;
+    let singleLine = false;
+    const cnt = document.createElement("div");
     cnt.style.overflow = "auto";
     cnt.style.whiteSpace = "normal";
     cnt.style.position = "absolute";
@@ -983,16 +986,16 @@ function TextView() {
     };
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
-        var hMode = MS.getMode(hMS);
-        var wMode = MS.getMode(wMS);
+        let w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
+        const hMode = MS.getMode(hMS);
+        const wMode = MS.getMode(wMS);
 
         cnt.style.width = (w - this.getPL() - this.getPR()) + "px";
         cnt.style.height = "100%";
         cnt.style.left = this.getPL() + "px";
 
-        var measureDiv = document.createElement("div");
+        const measureDiv = document.createElement("div");
         if (wMode == MS.UNSPECIFIED) {
             measureDiv.style.width = "auto";
             measureDiv.style.display = "inline-block";
@@ -1012,8 +1015,8 @@ function TextView() {
         mHideDiv.appendChild(measureDiv);
 
         if (measureDiv.clientHeight !== 0) {
-            var measureH = measureDiv.clientHeight;
-            var measureW = measureDiv.clientWidth;
+            const measureH = measureDiv.clientHeight;
+            const measureW = measureDiv.clientWidth;
             if (wMode == MS.UNSPECIFIED) {
                 w = measureW + this.getPL() + this.getPR() + 1;
                 cnt.style.width = w + "px";
@@ -1079,14 +1082,14 @@ function TextView() {
 function Button() {
     View.apply(this);
 
-    var bg = 0x00ffffff;
-    var pressBg = 0x1a000000;
+    let bg = 0x00ffffff;
+    let pressBg = 0x1a000000;
 
-    var textColor = 0xff333333;
-    var pressTextColor = 0xffffffff;
+    let textColor = 0xff333333;
+    let pressTextColor = 0xffffffff;
 
-    var borderT = 0;
-    var borderB = 0;
+    let borderT = 0;
+    let borderB = 0;
 
     this.div.style.textAlign = "center";
     this.setBorder(1, 0x1a000000);
@@ -1148,15 +1151,15 @@ function Button() {
 function EditText() {
     ViewGroup.apply(this);
 
-    var tag = "EditText" + (new Date()).getTime();
+    const tag = "EditText" + (new Date()).getTime();
 
-    var self = this;
-    var focusListener = null;
-    var input;
-    var textSize = 12;
-    var isPassword = false;
-    var textListener = null;
-    var isFocused;
+    const self = this;
+    let focusListener = null;
+    let input;
+    let textSize = 12;
+    let isPassword = false;
+    let textListener = null;
+    let isFocused;
 
     this.setPreventHtmlTouchEvent(false);
 
@@ -1330,7 +1333,7 @@ function EditText() {
      * @param {int} c Sets the hint text's color.
      */
     this.setHintColor = function(c) {
-        var css = document.createElement("style");
+        const css = document.createElement("style");
         css.innerHTML = "." + tag + "::-webkit-input-placeholder{ color:" + Utils.toCssColor(c) + "}";
         document.head.appendChild(css);
         input.className += tag + " ";
@@ -1346,14 +1349,14 @@ function EditText() {
     };
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
-        var hMode = MS.getMode(hMS);
+        const w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
+        const hMode = MS.getMode(hMS);
 
-        var border = parseFloat(this.div.style.border.replace(/^(.*)px.*$/, '$1')) * 2 || 0;
+        const border = parseFloat(this.div.style.border.replace(/^(.*)px.*$/, '$1')) * 2 || 0;
 
-        var cntW = w - this.getPL() - this.getPR();
-        var cntH = h - this.getPT() - this.getPB() - border;
+        const cntW = w - this.getPL() - this.getPR();
+        let cntH = h - this.getPT() - this.getPB() - border;
         if (hMode != MS.EXACTLY) {
             cntH = textSize * 1.5;
             h = cntH + this.getPT() + this.getPB();
@@ -1405,12 +1408,12 @@ function WebView() {
     this.setPreventHtmlTouchEvent(true);
     this.setBg("#ffffff");
 
-    var frame = document.createElement("iframe");
+    const frame = document.createElement("iframe");
     frame.style.border = "none";
     this.div.appendChild(frame);
 
-    var finishListener;
-    var outTimeId = 0;
+    let finishListener;
+    let outTimeId = 0;
 
     this.getWindow = function() {
         return frame.contentWindow;
@@ -1468,8 +1471,8 @@ function WebView() {
     };
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
+        const w = MS.getSize(wMS);
+        const h = MS.getSize(hMS);
         frame.style.width = w + "px";
         frame.style.height = h + "px";
         this.setMD(w, h);

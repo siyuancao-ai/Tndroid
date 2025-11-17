@@ -1,25 +1,25 @@
 function ListView(ItemFunc) {
     ScrollView.apply(this);
 
-    var listView = this;
+    const listView = this;
 
-    var dataList = [];
-    var content;
-    var itemHeight;
-    var totalItemNum;
-    var hasCalcTotalItemNum = false;
+    let dataList = [];
+    let content;
+    let itemHeight;
+    let totalItemNum;
+    let hasCalcTotalItemNum = false;
 
-    var itemCreateListener = null;
-    var itemUpdateListener = null;
+    let itemCreateListener = null;
+    let itemUpdateListener = null;
 
-    var header;
-    var footer;
-    var container;
+    let header;
+    let footer;
+    let container;
 
-    var headerHeight = 0;
-    var footerHeight = 0;
+    let headerHeight = 0;
+    let footerHeight = 0;
 
-    var topOffset = 0;
+    let topOffset = 0;
 
     container = new LinearLayout();
 
@@ -57,7 +57,7 @@ function ListView(ItemFunc) {
 
     this.setData = function(data) {
         dataList = data;
-        for (var i = 0; i < Math.min(totalItemNum, dataList.length); i++) {
+        for (let i = 0; i < Math.min(totalItemNum, dataList.length); i++) {
             content.addView(getListItem(i, null));
         }
         content.layoutAtPosition();
@@ -82,7 +82,7 @@ function ListView(ItemFunc) {
             }, 100);
             return;
         }
-        var datas = [];
+        let datas = [];
         if (Utils.isArray(data)) {
             datas = data;
         } else {
@@ -93,7 +93,7 @@ function ListView(ItemFunc) {
         } else {
             onDataChanged(0);
         }
-        for (var i = 0; i < datas.length; i++) {
+        for (let i = 0; i < datas.length; i++) {
             dataList.add(index + i, datas[i]);
             if (dataList.length <= totalItemNum) {
                 content.addView(getListItem(index + i, null), index + 1 + i);
@@ -202,7 +202,7 @@ function ListView(ItemFunc) {
     };
 
     function onDataChanged() {
-        for (var i = 0; i < content.getChildCount(); i++) {
+        for (let i = 0; i < content.getChildCount(); i++) {
             content.getChildAt(i).setId(-1);
         }
     }
@@ -240,24 +240,24 @@ function ListView(ItemFunc) {
     function ListViewContent() {
         ViewGroup.apply(this);
 
-        var listViewContent = this;
-        var childCount = 0;
-        var topPassCount = 0;
-        var topIndex = 0;
-        var lastTopIndex = 0;
+        const listViewContent = this;
+        let childCount = 0;
+        const topPassCount = 0;
+        let topIndex = 0;
+        let lastTopIndex = 0;
 
         this.onMeasure = function(wMS, hMS) {
-            var w = MS.getSize(wMS);
-            var h = 0;
+            const w = MS.getSize(wMS);
+            let h = 0;
             childCount = this.getChildCount();
-            for (var i = 0; i < childCount; i++) {
-                var c = this.getChildAt(i);
+            for (let i = 0; i < childCount; i++) {
+                const c = this.getChildAt(i);
                 if (c.getMH() > 0 && c.getMW() == w) {
                     continue;
                 }
-                var itemH = 0;
-                var cLp = c.getLayoutParams();
-                var cwMS = wMS;
+                let itemH = 0;
+                const cLp = c.getLayoutParams();
+                let cwMS = wMS;
                 if (cLp != null) {
                     if (cLp.height > 0) {
                         itemH = cLp.height;
@@ -282,15 +282,15 @@ function ListView(ItemFunc) {
             if (childCount == 0) {
                 return;
             }
-            var topPass = Math.floor(topOffset / itemHeight);
+            const topPass = Math.floor(topOffset / itemHeight);
             topIndex = topPass % childCount;
 
-            var y = topPass * itemHeight;
-            for (var i = 0; i < childCount; i++) {
-                var index = (i + topIndex) % childCount;
-                var c = listViewContent.getChildAt(index);
+            let y = topPass * itemHeight;
+            for (let i = 0; i < childCount; i++) {
+                const index = (i + topIndex) % childCount;
+                const c = listViewContent.getChildAt(index);
                 c.layoutByTransform(0, y);
-                var modelIndex = topPass + i;
+                const modelIndex = topPass + i;
                 getListItem(modelIndex, c);
                 y += c.getMH();
             }
@@ -301,7 +301,7 @@ function ListView(ItemFunc) {
                 return;
             }
 
-            var topPass = Math.floor(topOffset / itemHeight);
+            const topPass = Math.floor(topOffset / itemHeight);
             topIndex = topPass % childCount;
             if (topIndex == lastTopIndex) {
                 return;
@@ -315,17 +315,17 @@ function ListView(ItemFunc) {
             lastTopIndex = topIndex;
 
             function scrollUp() {
-                var end = topIndex;
+                let end = topIndex;
                 if (end < lastTopIndex) {
                     end += childCount;
                 }
-                for (var i = lastTopIndex; i < end; i++) {
-                    var c = listViewContent.getChildAt(i % childCount);
+                for (let i = lastTopIndex; i < end; i++) {
+                    const c = listViewContent.getChildAt(i % childCount);
                     if (c) {
-                        var lastIndex = (i + childCount - 1) % childCount;
-                        var y = listViewContent.getChildAt(lastIndex).getBottom();
+                        const lastIndex = (i + childCount - 1) % childCount;
+                        const y = listViewContent.getChildAt(lastIndex).getBottom();
                         c.layoutByTransform(0, y);
-                        var newIndex = y / itemHeight;
+                        let newIndex = y / itemHeight;
                         if (newIndex >= dataList.length) {
                             newIndex = dataList.length - 1;
                         }
@@ -335,17 +335,17 @@ function ListView(ItemFunc) {
             }
 
             function scrollDown() {
-                var start = lastTopIndex;
+                let start = lastTopIndex;
                 if (start < topIndex) {
                     start += childCount;
                 }
-                for (var i = start - 1; i >= topIndex; i--) {
-                    var c = listViewContent.getChildAt(i % childCount);
+                for (let i = start - 1; i >= topIndex; i--) {
+                    const c = listViewContent.getChildAt(i % childCount);
                     if (c) {
-                        var lastIndex = (i + 1) % childCount;
-                        var y = listViewContent.getChildAt(lastIndex).getTop() - c.getMH();
+                        const lastIndex = (i + 1) % childCount;
+                        const y = listViewContent.getChildAt(lastIndex).getTop() - c.getMH();
                         c.layoutByTransform(0, y);
-                        var newIndex = y / itemHeight;
+                        let newIndex = y / itemHeight;
                         if (newIndex < 0) {
                             newIndex = 0;
                         }

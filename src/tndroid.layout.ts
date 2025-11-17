@@ -4,8 +4,65 @@
  *
  * @class LayoutParams
  */
-var LP = LayoutParams;
-function LayoutParams(wOrParams, h) {
+// 导入必要的工具类
+import { MS } from './tndroid.core';
+
+export class LayoutParams {
+    static readonly FILL_PARENT = -1;
+    static readonly FP = -1;
+    static readonly MATCH_PARENT = -1;
+    static readonly MP = -1;
+    static readonly WRAP_CONTENT = -2;
+    static readonly WC = -2;
+
+    width: number;
+    height: number;
+    leftMargin: number;
+    topMargin: number;
+    rightMargin: number;
+    bottomMargin: number;
+    gravity: number;
+    weight: number;
+
+    constructor(wOrParams: number | { width: number; height: number }, h?: number) {
+        if (typeof wOrParams === "number") {
+            this.width = wOrParams;
+            this.height = h!;
+        } else {
+            this.width = wOrParams.width;
+            this.height = wOrParams.height;
+        }
+        this.leftMargin = 0;
+        this.topMargin = 0;
+        this.rightMargin = 0;
+        this.bottomMargin = 0;
+        this.gravity = -1;
+        this.weight = 0;
+    }
+
+    /**
+     * Sets the margins, in pixels.
+     *
+     * @method setMargins
+     * @param {int} l the left margin size
+     * @param {int} t the top margin size
+     * @param {int} r the right margin size
+     * @param {int} b the bottom margin size
+     */
+    setMargins(l: number, t?: number, r?: number, b?: number): void {
+        if (t == undefined && r == undefined && b == undefined) {
+            t = l;
+            r = l;
+            b = l;
+        }
+        this.leftMargin = l;
+        this.topMargin = t!;
+        this.rightMargin = r!;
+        this.bottomMargin = b!;
+    }
+}
+
+let LP = LayoutParams;
     if ((typeof wOrParams) == "number") {
         this.width = wOrParams;
         this.height = h;
@@ -84,7 +141,7 @@ function getDefaultLP() {
 }
 
 function getLp(view) {
-    var lp = view.getLayoutParams();
+    let lp = view.getLayoutParams();
     if (lp == null) {
         lp = getDefaultLP();
     }
@@ -92,7 +149,7 @@ function getLp(view) {
 }
 
 function makeSpec(cDimen, lpDimen) {
-    var spec;
+    let spec;
     if (lpDimen == LP.FP) {
         spec = MS.makeMS(cDimen, MS.EXACTLY);
     } else if (lpDimen == LP.WC) {
@@ -104,13 +161,13 @@ function makeSpec(cDimen, lpDimen) {
 }
 
 function calcX(p, c) {
-    var lp = getLp(c);
-    var pl = p.getPL();
-    var pr = p.getPR();
-    var x = pl + lp.leftMargin;
+    let lp = getLp(c);
+    let pl = p.getPL();
+    let pr = p.getPR();
+    let x = pl + lp.leftMargin;
     if (lp.gravity != -1) {
         if (lp.gravity & Gravity.CENTER_HORIZONTAL) {
-            var cntW = p.getMW() - pl - pr - lp.leftMargin - lp.rightMargin;
+            let cntW = p.getMW() - pl - pr - lp.leftMargin - lp.rightMargin;
             x = pl + lp.leftMargin + (cntW - c.getMW()) / 2;
         } else if (lp.gravity & Gravity.RIGHT) {
             x = p.getMW() - pr - lp.rightMargin - c.getMW();
@@ -120,13 +177,13 @@ function calcX(p, c) {
 }
 
 function calcY(p, c) {
-    var lp = getLp(c);
-    var pt = p.getPT();
-    var pb = p.getPB();
-    var y = pt + lp.topMargin;
+    let lp = getLp(c);
+    let pt = p.getPT();
+    let pb = p.getPB();
+    let y = pt + lp.topMargin;
     if (lp.gravity != -1) {
         if (lp.gravity & Gravity.CENTER_VERTICAL) {
-            var cntH = p.getMH() - pt - pb - lp.topMargin - lp.bottomMargin;
+            let cntH = p.getMH() - pt - pb - lp.topMargin - lp.bottomMargin;
             y = pt + lp.topMargin + (cntH - c.getMH()) / 2;
         } else if (lp.gravity & Gravity.BOTTOM) {
             y = p.getMH() - pb - lp.bottomMargin - c.getMH();
@@ -147,7 +204,7 @@ function LinearLayout() {
 
     this.setTag("LinearLayout");
 
-    var orientation = LinearLayout.VERTICAL;
+    let orientation = LinearLayout.VERTICAL;
 
     /**
      * Should the layout be a column or a row.
@@ -161,23 +218,23 @@ function LinearLayout() {
     };
 
     this.getTotalWeight = function() {
-        var w = 0;
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
-            var clp = getLp(c);
+        let w = 0;
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
+            let clp = getLp(c);
             w += clp.weight;
         }
         return w;
     };
 
     this.getAvailableWidth = function(totalWidth) {
-        var w = totalWidth - this.getPL() - this.getPR();
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let w = totalWidth - this.getPL() - this.getPR();
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
-            var lp = getLp(c);
+            let lp = getLp(c);
             w -= (lp.leftMargin + lp.rightMargin);
             if (lp.width > 0) {
                 w -= lp.width;
@@ -192,13 +249,13 @@ function LinearLayout() {
     };
 
     this.getAvailableHeight = function(totalHeight) {
-        var h = totalHeight - this.getPT() - this.getPB();
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let h = totalHeight - this.getPT() - this.getPB();
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
-            var lp = getLp(c);
+            let lp = getLp(c);
             h -= (lp.topMargin + lp.bottomMargin);
             if (lp.height > 0) {
                 h -= lp.height;
@@ -221,33 +278,33 @@ function LinearLayout() {
     };
 
     this.measureVertical = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
-        var pl = this.getPL();
-        var pt = this.getPT();
-        var pr = this.getPR();
-        var pb = this.getPB();
-        var cntH = pt + pb;
-        var totalWeight = this.getTotalWeight();
-        var lp = getLp(this);
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
+        let pl = this.getPL();
+        let pt = this.getPT();
+        let pr = this.getPR();
+        let pb = this.getPB();
+        let cntH = pt + pb;
+        let totalWeight = this.getTotalWeight();
+        let lp = getLp(this);
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
-            var clp = getLp(c);
-            var cW = w - pl - pr - clp.leftMargin - clp.rightMargin;
-            var cH = h - pt - pb - clp.topMargin - clp.bottomMargin;
-            var cWS = makeSpec(cW, clp.width);
-            var cHS = makeSpec(cH, clp.height);
+            let clp = getLp(c);
+            let cW = w - pl - pr - clp.leftMargin - clp.rightMargin;
+            let cH = h - pt - pb - clp.topMargin - clp.bottomMargin;
+            let cWS = makeSpec(cW, clp.width);
+            let cHS = makeSpec(cH, clp.height);
             if (totalWeight != 0 && !(clp.weight == 0 && clp.height > 0)) {
-                var ch = this.getAvailableHeight(h) * clp.weight / totalWeight;
+                let ch = this.getAvailableHeight(h) * clp.weight / totalWeight;
                 cHS = MS.makeMeasureSpec(ch, MS.EXACTLY);
             }
             c.measure(cWS, cHS);
             cntH += c.getMH() + clp.topMargin + clp.bottomMargin;
         }
-        var hMode = MS.getMode(hMS);
+        let hMode = MS.getMode(hMS);
         if (hMode != MS.EXACTLY) {
             if (lp.height == LP.WC) {
                 h = cntH;
@@ -258,45 +315,45 @@ function LinearLayout() {
     };
 
     this.measureHorizontal = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
-        var hMode = MS.getMode(hMS);
-        var pl = this.getPL();
-        var pt = this.getPT();
-        var pr = this.getPR();
-        var pb = this.getPB();
-        var cntW = pl + pr;
-        var totalWeight = this.getTotalWeight();
-        var lp = getLp(this);
+        let w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
+        let hMode = MS.getMode(hMS);
+        let pl = this.getPL();
+        let pt = this.getPT();
+        let pr = this.getPR();
+        let pb = this.getPB();
+        let cntW = pl + pr;
+        let totalWeight = this.getTotalWeight();
+        let lp = getLp(this);
         if (hMode != MS.EXACTLY && lp.height == LP.WC) {
             h = pt + pb;
         }
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
-            var clp = getLp(c);
-            var cW = w - pl - pr - clp.leftMargin - clp.rightMargin;
-            var cH = h - pt - pb - clp.topMargin - clp.bottomMargin;
-            var cWS = makeSpec(cW, clp.width);
-            var cHS = makeSpec(cH, clp.height);
+            let clp = getLp(c);
+            let cW = w - pl - pr - clp.leftMargin - clp.rightMargin;
+            let cH = h - pt - pb - clp.topMargin - clp.bottomMargin;
+            let cWS = makeSpec(cW, clp.width);
+            let cHS = makeSpec(cH, clp.height);
             if (totalWeight != 0 && !(clp.weight == 0 && clp.width > 0)) {
-                var cWidth = this.getAvailableWidth(w) * clp.weight / totalWeight;
+                let cWidth = this.getAvailableWidth(w) * clp.weight / totalWeight;
                 cWS = MS.makeMeasureSpec(cWidth, MS.EXACTLY);
             }
             c.measure(cWS, cHS);
             cntW += c.getMW() + clp.leftMargin + clp.rightMargin;
 
             if (hMode != MS.EXACTLY && lp.height == LP.WC) {
-                var ch = pt + pb + clp.topMargin + clp.bottomMargin + c.getMH();
+                let ch = pt + pb + clp.topMargin + clp.bottomMargin + c.getMH();
                 if (ch > h) {
                     h = ch;
                 }
             }
         }
 
-        var wMode = MS.getMode(wMS);
+        let wMode = MS.getMode(wMS);
         if (wMode != MS.EXACTLY) {
             if (lp.width == LP.WC) {
                 w = cntW;
@@ -315,14 +372,14 @@ function LinearLayout() {
     };
 
     this.layoutVertical = function() {
-        var x = this.getPL();
-        var y = this.getPT();
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let x = this.getPL();
+        let y = this.getPT();
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
-            var clp = getLp(c);
+            let clp = getLp(c);
             x = calcX(this, c);
             y += clp.topMargin;
             c.layout(x, y);
@@ -332,14 +389,14 @@ function LinearLayout() {
     };
 
     this.layoutHorizontal = function() {
-        var x = this.getPL();
-        var y = this.getPT();
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var child = this.getChildAt(i);
+        let x = this.getPL();
+        let y = this.getPT();
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let child = this.getChildAt(i);
             if (child.getVisibility() == View.GONE) {
                 continue;
             }
-            var clp = getLp(child);
+            let clp = getLp(child);
             x += clp.leftMargin;
             y = calcY(this, child);
             child.layout(x, y);
@@ -382,31 +439,31 @@ function FrameLayout() {
     ViewGroup.apply(this);
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
-        var cW = w - this.getPL() - this.getPR();
-        var cH = h - this.getPT() - this.getPB();
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
+        let cW = w - this.getPL() - this.getPR();
+        let cH = h - this.getPT() - this.getPB();
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() != View.VISIBLE) {
                 continue;
             }
-            var lp = getLp(c);
-            var cw = cW - lp.leftMargin - lp.rightMargin;
-            var ch = cH - lp.topMargin - lp.bottomMargin;
+            let lp = getLp(c);
+            let cw = cW - lp.leftMargin - lp.rightMargin;
+            let ch = cH - lp.topMargin - lp.bottomMargin;
             c.measure(makeSpec(cw, lp.width), makeSpec(ch, lp.height));
         }
         this.setMD(w, h);
     };
 
     this.onLayout = function() {
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() != View.VISIBLE) {
                 continue;
             }
-            var x = calcX(this, c);
-            var y = calcY(this, c);
+            let x = calcX(this, c);
+            let y = calcY(this, c);
             c.layout(x, y);
         }
     };
@@ -423,26 +480,26 @@ function Gallery() {
 
     this.setTag("Gallery");
 
-    var maxDuration = 200;
-    var snapV = 100;
-    var self = this;
-    var curScreen = 0;
-    var processor = new Processor();
-    var inScrolling = false;
-    var isXLocked = false;
-    var lastX = 0;
-    var lastY = 0;
-    var downX = 0;
-    var downY = 0;
-    var touchSlop = 10;
-    var leftEdge = 0;
-    var rightEdge = 0;
-    var totalWidth;
-    var screenWidth;
-    var rollPadding = 0.4;
-    var vTracker = new VelocityTracker();
-    var xChangedListener = null;
-    var screenChangedListener = null;
+    let maxDuration = 200;
+    let snapV = 100;
+    let self = this;
+    let curScreen = 0;
+    let processor = new Processor();
+    let inScrolling = false;
+    let isXLocked = false;
+    let lastX = 0;
+    let lastY = 0;
+    let downX = 0;
+    let downY = 0;
+    let touchSlop = 10;
+    let leftEdge = 0;
+    let rightEdge = 0;
+    let totalWidth;
+    let screenWidth;
+    let rollPadding = 0.4;
+    let vTracker = new VelocityTracker();
+    let xChangedListener = null;
+    let screenChangedListener = null;
 
     this.setOnXChangedListener = function(l) {
         xChangedListener = l;
@@ -486,8 +543,8 @@ function Gallery() {
             return;
         }
 
-        var delta = calcDist(index);
-        var during = duration;
+        let delta = calcDist(index);
+        let during = duration;
         if (during == undefined) {
             during = Math.abs(delta);
         }
@@ -501,8 +558,8 @@ function Gallery() {
 
     this.snapByV = function(index, v) {
         index = this.checkBounds(index);
-        var delta = calcDist(index);
-        var duration = Math.abs(delta * 1000 / v) / 3;
+        let delta = calcDist(index);
+        let duration = Math.abs(delta * 1000 / v) / 3;
         duration = Math.min(duration, maxDuration);
         this.snapToScreen(index, duration);
     };
@@ -524,12 +581,12 @@ function Gallery() {
     };
 
     this.onInterceptTouchEvent = function(e) {
-        var action = e.getAction();
+        let action = e.getAction();
         if ((action == MotionEvent.ACTION_MOVE) && inScrolling && !isXLocked) {
             return true;
         }
 
-        var x = e.getX();
+        let x = e.getX();
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -539,7 +596,7 @@ function Gallery() {
                 inScrolling = !processor.isFinished();
                 break;
             case MotionEvent.ACTION_MOVE:
-                var xDiff =  Math.abs(lastX - x);
+                let xDiff =  Math.abs(lastX - x);
                 if (xDiff > touchSlop) {
                     inScrolling = true;
                     lastX = x;
@@ -562,7 +619,7 @@ function Gallery() {
 
     this.onTouchEvent = function(ev) {
         vTracker.addMovement(ev);
-        var x = ev.getX();
+        let x = ev.getX();
 
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -578,11 +635,11 @@ function Gallery() {
                     break;
                 }
 
-                var dX = lastX - x;
+                let dX = lastX - x;
                 lastX = x;
                 lastY = ev.getY();
 
-                var dst = this.getScrollX() + dX;
+                let dst = this.getScrollX() + dX;
                 if (dst < 0) {
                     if (leftEdge == 0) {
                         dX = -this.getScrollX();
@@ -593,8 +650,8 @@ function Gallery() {
                     if (rightEdge == 0) {
                         dX = screenWidth - this.getScrollX();
                     } else {
-                        var maxExceed = rightEdge - totalWidth;
-                        var realExceed = this.getScrollX() - (totalWidth - screenWidth);
+                        let maxExceed = rightEdge - totalWidth;
+                        let realExceed = this.getScrollX() - (totalWidth - screenWidth);
                         if (realExceed < 0) {
                             dX = (-realExceed);
                         } else if (maxExceed == 0){
@@ -608,7 +665,7 @@ function Gallery() {
                 break;
             case MotionEvent.ACTION_UP:
                 vTracker.computeCurrentVelocity(1000);
-                var vX = vTracker.getXVelocity();
+                let vX = vTracker.getXVelocity();
                 if (vX > snapV && curScreen > 0) { // left
                     touchEnd(curScreen - 1, vX);
                 } else if (vX < -snapV && curScreen < this.getChildCount() - 1) {
@@ -627,14 +684,14 @@ function Gallery() {
     };
 
     this.onMeasure = function(wMS, hMS) {
-        var w = MS.getSize(wMS);
-        var h = MS.getSize(hMS);
+        let w = MS.getSize(wMS);
+        let h = MS.getSize(hMS);
 
         screenWidth = w;
 
-        var count = this.getChildCount();
+        let count = this.getChildCount();
         totalWidth = 0;
-        for (var i = 0; i < count; i++) {
+        for (let i = 0; i < count; i++) {
             this.getChildAt(i).measure(MS.makeMS(w, MS.EXACTLY),
                 MS.makeMS(h, MS.EXACTLY));
             totalWidth += this.getChildAt(i).getMW();
@@ -650,14 +707,14 @@ function Gallery() {
 
 
     this.onLayout = function() {
-        var x = 0;
-        for (var i = 0; i < this.getChildCount(); i++) {
-            var c = this.getChildAt(i);
+        let x = 0;
+        for (let i = 0; i < this.getChildCount(); i++) {
+            let c = this.getChildAt(i);
             if (c.getVisibility() == View.GONE) {
                 continue;
             }
 
-            var cWidth = c.getMW();
+            let cWidth = c.getMW();
             c.layout(x, 0);
             x += cWidth;
         }
@@ -665,12 +722,12 @@ function Gallery() {
 
     this.computeScroll = function() {
         if (processor.computeProcessOffset()) {
-            var x = processor.getCurrProcess();
+            let x = processor.getCurrProcess();
             this.scrollTo(x);
 
             this.postInvalidate();
         } else {
-            var x = this.getScrollX();
+            let x = this.getScrollX();
             this.translate3d(-x, 0);
         }
     };
@@ -680,8 +737,8 @@ function Gallery() {
     }
 
     function calcDist(index) {
-        var d = self.getChildAt(index).getLeft() - self.getScrollX();
-        var rightShift = self.getChildAt(index).getLeft() + screenWidth - totalWidth;
+        let d = self.getChildAt(index).getLeft() - self.getScrollX();
+        let rightShift = self.getChildAt(index).getLeft() + screenWidth - totalWidth;
         if (rightShift > 0) {
             d -= rightShift;
         }
@@ -695,11 +752,11 @@ function Gallery() {
     }
 
     function snap() {
-        var index;
-        var currentWidth = 0;
+        let index;
+        let currentWidth = 0;
 
         for (index = 0; index < self.getChildCount(); index++) {
-            var cWidth = self.getChildAt(index).getMW();
+            let cWidth = self.getChildAt(index).getMW();
             if (currentWidth + cWidth > self.getScrollX()) {
                 break;
             }
