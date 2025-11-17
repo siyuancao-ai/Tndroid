@@ -1,14 +1,14 @@
 function Animation() {
-    var mView;
-    var mDuration = 0;
-    var mStartTime = 0;
-    var mInterval = null;
-    var mStartOffset = 0;
-    var mFillMode = "backwards";
-    var mInterpolator = Interpolator.LINEAR;
-    var mEndListener;
-    var mStartState;
-    var mEndState;
+    let mView;
+    let mDuration = 0;
+    const mStartTime = 0;
+    const mInterval = null;
+    let mStartOffset = 0;
+    let mFillMode = "backwards";
+    let mInterpolator = Interpolator.LINEAR;
+    let mEndListener;
+    let mStartState;
+    let mEndState;
     this.vendors = { Webkit: 'webkit', Moz: 'Moz', O: 'o', Ms:'ms'};
 
     this.getStartState = function() {
@@ -95,11 +95,11 @@ function Animation() {
 function TranslateAnimation(fromX, toX, fromY, toY) {
     Animation.apply(this, []);
 
-    var mSelf = this;
+    const mSelf = this;
 
-    var mSelfPropertes = "transform";
+    const mSelfPropertes = "transform";
 
-    var mResetState = "translate3d(0px, 0px, 0)";
+    const mResetState = "translate3d(0px, 0px, 0)";
 
     this.getTag = function() {
         return "TranslateAnimation";
@@ -123,21 +123,21 @@ function TranslateAnimation(fromX, toX, fromY, toY) {
 
     this.initState = function(_view) {
         _view.div.style.transform = mSelf.getStartState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getStartState();
         }
     };
 
     this.stopState = function(_view) {
         _view.div.style.transform = mSelf.getEndState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getEndState();;
         }
     };
 
     this.resetState = function(_view) {
         // _view.div.style.transform = mResetState;
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transition"] = "";
             _view.div.style[mSelf.vendors[i] + "Transform"] = mResetState;
         }
@@ -163,7 +163,7 @@ function TranslateAnimation(fromX, toX, fromY, toY) {
         mSelf.initState(mSelf.getView());
         setTimeout(function() {
             mSelf.getView().div.style.translation = "transform " + mSelf.getTransition();
-            for (var i in mSelf.vendors) {
+            for (const i in mSelf.vendors) {
                 mSelf.getView().div.style[mSelf.vendors[i] + "Transition"] = "-" + mSelf.vendors[i] + "-transform " + mSelf.getTransition();
             }
             mSelf.stopState(mSelf.getView());
@@ -187,11 +187,11 @@ function TranslateAnimation(fromX, toX, fromY, toY) {
 function AlphaAnimation(fromAlpha,toAlpha) {
     Animation.apply(this, []);
 
-    var mSelf = this;
+    const mSelf = this;
 
-    var mSelfPropertes = "opacity";
+    const mSelfPropertes = "opacity";
 
-    var mResetState = "";
+    const mResetState = "";
 
     this.getTag = function() {
         return "AlphaAnimation";
@@ -223,7 +223,7 @@ function AlphaAnimation(fromAlpha,toAlpha) {
     };
 
     this.resetState = function(_view) {
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transition"] = "";
             // console.log(mSelf.getView().div.style[mSelf.vendors[i] + "Transition"]);
         }
@@ -237,7 +237,7 @@ function AlphaAnimation(fromAlpha,toAlpha) {
     this.startInner = function() {
         mSelf.initState(mSelf.getView());
         setTimeout(function(){
-            for (var i in mSelf.vendors) {
+            for (const i in mSelf.vendors) {
                 mSelf.getView().div.style[mSelf.vendors[i] + "Transition"] = mSelf.getTransition();
                 // console.log(mSelf.getView().div.style[mSelf.vendors[i] + "Transition"]);
             }
@@ -268,11 +268,11 @@ function AlphaAnimation(fromAlpha,toAlpha) {
 function RotateAnimation(fromDegrees, toDegrees) {
     Animation.apply(this, []);
 
-    var mSelfPropertes = "-webkit-transform";
+    const mSelfPropertes = "-webkit-transform";
 
-    var mSelf = this;
+    const mSelf = this;
 
-    var mResetState = "rotate(0deg)";
+    const mResetState = "rotate(0deg)";
 
     this.getTag = function() {
         return "RotateAnimation";
@@ -296,7 +296,7 @@ function RotateAnimation(fromDegrees, toDegrees) {
 
     this.resetState = function(_view) {
         // _view.div.style.transform = mResetState;
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transition"] = "";
             _view.div.style[mSelf.vendors[i] + "Transform"] = mResetState;
         }
@@ -304,14 +304,14 @@ function RotateAnimation(fromDegrees, toDegrees) {
 
     this.initState = function(_view) {
         _view.div.style.transform = mSelf.getStartState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getStartState();
         }
     }
 
     this.stopState = function(_view) {
         _view.div.style.transform = mSelf.getEndState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getEndState();;
         }
     }
@@ -325,7 +325,7 @@ function RotateAnimation(fromDegrees, toDegrees) {
             mSelf.initState(mSelf.getView());
             setTimeout(function(){
                 // mSelf.getView().div.style.webkitTransition = mSelf.getTransition();
-                for (var i in mSelf.vendors) {
+                for (const i in mSelf.vendors) {
                     mSelf.getView().div.style[mSelf.vendors[i] + "Transition"] = "-" + mSelf.vendors[i] + "-transform " + mSelf.getTransition();
                     // console.log(mSelf.getView().div.style[mSelf.vendors[i] + "Transition"]);
                 }
@@ -348,11 +348,11 @@ function RotateAnimation(fromDegrees, toDegrees) {
 function ScaleAnimation(fromScale, toScale) {
     Animation.apply(this, []);
 
-    var mSelfPropertes = "-webkit-transform";
+    const mSelfPropertes = "-webkit-transform";
 
-    var mSelf = this;
+    const mSelf = this;
 
-    var mResetState = "scale(1)";
+    const mResetState = "scale(1)";
 
     this.getTag = function() {
         return "ScaleAnimation";
@@ -376,7 +376,7 @@ function ScaleAnimation(fromScale, toScale) {
 
     this.resetState = function(_view) {
         _view.div.style.transform = mResetState;
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transition"] = "";
             _view.div.style[mSelf.vendors[i] + "Transform"] = mResetState;
         }
@@ -385,14 +385,14 @@ function ScaleAnimation(fromScale, toScale) {
 
     this.initState = function(_view) {
         // _view.div.style.transform = mSelf.getStartState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getStartState();
         }
     }
 
     this.stopState = function(_view) {
         _view.div.style.transform = mSelf.getEndState();
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = mSelf.getEndState();;
         }
     }
@@ -407,7 +407,7 @@ function ScaleAnimation(fromScale, toScale) {
             // mSelf.initState(mSelf.getView());
             setTimeout(function() {
                 // mSelf.getView().div.style.webkitTransition = mSelf.getTransition();
-                for (var i in mSelf.vendors) {
+                for (const i in mSelf.vendors) {
                     mSelf.getView().div.style[mSelf.vendors[i] + "Transition"] = "-" + mSelf.vendors[i] + "-transform " + mSelf.getTransition();
                     // console.log(mSelf.getView().div.style[mSelf.vendors[i] + "Transition"]);
                 }
@@ -432,13 +432,13 @@ function AnimationSet() {
 
     Animation.apply(this, []);
 
-    var mSelf = this;
+    const mSelf = this;
 
-    var mTransform = "";
+    const mTransform = "";
 
-    var mAnimationList = new Array();
+    const mAnimationList = [];
 
-    var mMaxDuration = 0;
+    let mMaxDuration = 0;
 
     this.getTag = function() {
         return "AnimationSet";
@@ -473,22 +473,22 @@ function AnimationSet() {
     };
 
     this.resetState = function(_view) {
-        var n = mAnimationList.length;
-        for (var i = 0; i < n; i++) {
-            var anim = mAnimationList[i];
+        const n = mAnimationList.length;
+        for (let i = 0; i < n; i++) {
+            const anim = mAnimationList[i];
             anim.resetState(_view);
         }
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = "";
         }
     };
 
     this.initState = function(_view) {
-        var n = mAnimationList.length;
-        var trans = "";
+        const n = mAnimationList.length;
+        let trans = "";
         mMaxDuration = mSelf.getDuration();
-        for (var i = 0; i < n; i++) {
-            var anim = mAnimationList[i];
+        for (let i = 0; i < n; i++) {
+            const anim = mAnimationList[i];
             if (anim.isTransform()) {
                 if (trans == "") {
                     trans = anim.getStartState();
@@ -502,16 +502,16 @@ function AnimationSet() {
                 mMaxDuration = mMaxDuration < anim.getDuration() ? anim.getDuration() : mMaxDuration;
             }
         }
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = trans;
         }
     }
 
     this.stopState = function(_view) {
-        var n = mAnimationList.length;
-        var trans = "";
-        for (var i = 0; i < n; i++) {
-            var anim = mAnimationList[i];
+        const n = mAnimationList.length;
+        let trans = "";
+        for (let i = 0; i < n; i++) {
+            const anim = mAnimationList[i];
             if (anim.isTransform()) {
                 if (trans == "") {
                     trans = anim.getEndState();
@@ -522,7 +522,7 @@ function AnimationSet() {
                 anim.stopState(_view);
             }
         }
-        for (var i in mSelf.vendors) {
+        for (const i in mSelf.vendors) {
             _view.div.style[mSelf.vendors[i] + "Transform"] = trans;
         }
     }
@@ -530,7 +530,7 @@ function AnimationSet() {
     this.startInner = function() {
         mSelf.initState(mSelf.getView());
         setTimeout(function() {
-            for (var i in mSelf.vendors) {
+            for (const i in mSelf.vendors) {
 
                 mSelf.getView().div.style[mSelf.vendors[i] + "TransitionProperty"] = "all";
                 mSelf.getView().div.style[mSelf.vendors[i] + "TransitionDuration"] = mMaxDuration + "ms";

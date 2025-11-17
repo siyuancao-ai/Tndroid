@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tndroid Test</title>
+    <script src="dist/tndroid.umd.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        // 创建主视图
+        var mainView = new View();
+        mainView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        mainView.setBackgroundColor(0xFFF0F0F0);
+        
+        // 创建文本视图
+        var textView = new TextView();
+        textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        textView.setText("Hello Tndroid!");
+        textView.setTextSize(24);
+        
+        // 将文本视图添加到主视图
+        mainView.addView(textView);
+        
+        // 获取应用容器
+        var appContainer = document.getElementById("app");
+        
+        // 将主视图添加到应用容器
+        mainView.appendTo(appContainer);
+    </script>
+</body>
+</html>

@@ -1,22 +1,22 @@
 function MProgressBar() {
     View.apply(this);
 
-    var horizontalH = 3;
-    var smallSize = 30;
-    var largeSize = 45;
+    const horizontalH = 3;
+    const smallSize = 30;
+    const largeSize = 45;
 
-    var self = this;
-    var style = MProgressBar.Horizontal;
-    var color = 0xff4688f5;
-    var secondaryColor = 0xffb3d3ea;
-    var beginDegree = 0;
-    var endDegree = Math.PI * 2;
-    var offsetDegree = 0;
-    var finish = false;
-    var density = DisplayMetrics.density;
-    var duration = 2000;
+    const self = this;
+    let style = MProgressBar.Horizontal;
+    let color = 0xff4688f5;
+    const secondaryColor = 0xffb3d3ea;
+    let beginDegree = 0;
+    let endDegree = Math.PI * 2;
+    let offsetDegree = 0;
+    let finish = false;
+    const density = DisplayMetrics.density;
+    let duration = 2000;
 
-    var mProcessor = new Processor();
+    const mProcessor = new Processor();
     mProcessor.startProcess(0, 1, duration);
     mProcessor.setEndListener(function() {
         if (finish == false) {
@@ -50,7 +50,7 @@ function MProgressBar() {
     };
 
     this.onMeasure = function (wMS) {
-        var w, h;
+        let w, h;
         if (style == MProgressBar.Horizontal) {
             w = MS.getSize(wMS);
             h = horizontalH;
@@ -73,14 +73,14 @@ function MProgressBar() {
     };
 
     function drawLine(c) {
-        var w = self.getMW() * density;
-        var h = self.getMH() * density;
-        var distance = w * 1.1;
-        var p = mProcessor.getCurrProcess();
-        var p1 = f2(p);
-        var p2 = f1(p);
-        var begin = distance * p1;
-        var end = distance * p2;
+        const w = self.getMW() * density;
+        const h = self.getMH() * density;
+        const distance = w * 1.1;
+        const p = mProcessor.getCurrProcess();
+        const p1 = f2(p);
+        const p2 = f1(p);
+        const begin = distance * p1;
+        const end = distance * p2;
 
         c.lineWidth = h;
         c.beginPath();
@@ -101,14 +101,14 @@ function MProgressBar() {
     }
 
     function drawCircle(c) {
-        var x = self.getMW() / 2 * density;
-        var y = self.getMH() / 2 * density;
-        var lineWidth = x / 5;
-        var radius = self.getMW() / 2 * density;
-        var distance = Math.PI * 3;
-        var p = mProcessor.getCurrProcess();
-        var p1 = f1(p);
-        var p2 = f2(p);
+        const x = self.getMW() / 2 * density;
+        const y = self.getMH() / 2 * density;
+        const lineWidth = x / 5;
+        const radius = self.getMW() / 2 * density;
+        const distance = Math.PI * 3;
+        const p = mProcessor.getCurrProcess();
+        const p1 = f1(p);
+        const p2 = f2(p);
         beginDegree = offsetDegree + distance * p2;
         endDegree = offsetDegree + Math.PI * 0.1 + distance * p1;
         c.arc(x, y, radius - lineWidth / 2, beginDegree, endDegree);
@@ -151,12 +151,12 @@ Object.defineProperty(MProgressBar,"Large",{value:2});
 
 function MButton() {
     TextView.apply(this);
-    var id;
-    var downX;
-    var downY;
+    let id;
+    let downX;
+    let downY;
 
-    var density = DisplayMetrics.density;
-    var bg = new WaveDrawable();
+    const density = DisplayMetrics.density;
+    const bg = new WaveDrawable();
     bg.setCallback(this);
 
     this.setWillNotDraw(false);
@@ -212,8 +212,8 @@ function MButton() {
 function MImageButton() {
     ImageButton.apply(this);
 
-    var denisty = DisplayMetrics.density;
-    var bg = new WaveDrawable();
+    const denisty = DisplayMetrics.density;
+    const bg = new WaveDrawable();
     bg.setCallback(this);
 
     this.setWillNotDraw(false);
@@ -246,7 +246,7 @@ function MImageButton() {
     };
 }
 
-var MDialog = new _MDialog();
+const MDialog = new _MDialog();
 function _MDialog() {
     LinearLayout.apply(this);
 
@@ -256,50 +256,50 @@ function _MDialog() {
     this.setBoxShadow(0, 4, 16, 8, 0x33000000);
     this.setPadding(24);
 
-    var self = this;
-    var okAction = null;
-    var cancelAction = null;
+    const self = this;
+    let okAction = null;
+    let cancelAction = null;
 
-    var lp = new LP(336, LP.WC);
+    const lp = new LP(336, LP.WC);
     lp.gravity = Gravity.CENTER;
     this.setLP(lp);
 
-    var mask = new View();
+    const mask = new View();
     mask.setBg(0x66000000);
     mask.setOnClickListener(function() {
         self.hide();
     });
     mask.setClickable(true);
 
-    var title = new TextView();
+    const title = new TextView();
     title.setTextColor(0xff212121);
     title.setTextSize(24);
-    var titleLp = new LP(LP.FP, LP.WC);
+    const titleLp = new LP(LP.FP, LP.WC);
     titleLp.bottomMargin = 20;
 
-    var msg = new TextView();
+    const msg = new TextView();
     msg.setTextIsSelectable(true);
     msg.setTextColor(0xff424242);
     msg.setTextSize(14);
     msg.setLineHeight(24);
     msg.setText("this is a dialog");
-    var mMsgLp = new LP(LP.FP, LP.WC);
+    const mMsgLp = new LP(LP.FP, LP.WC);
     this.addView(msg, mMsgLp);
 
-    var btnArea = new LinearLayout();
+    const btnArea = new LinearLayout();
     btnArea.setOrientation(LinearLayout.HORIZONTAL);
-    var btnAreaLp = new LP(LP.FP, LP.WC);
+    const btnAreaLp = new LP(LP.FP, LP.WC);
     btnAreaLp.setMargins(0, 24, -16, -16);
     this.addView(btnArea, btnAreaLp);
 
-    var paddingView = new View();
-    var paddingLp = new LP(0, 36);
+    const paddingView = new View();
+    const paddingLp = new LP(0, 36);
     paddingLp.weight = 1;
     btnArea.addView(paddingView, paddingLp);
 
-    var btnLp = new LP(80, 36);
+    const btnLp = new LP(80, 36);
 
-    var cancel = new MButton();
+    const cancel = new MButton();
     cancel.setText("cancel");
     cancel.setBoxShadow(0, 0, 0, 0, 0);
     cancel.setDimBg(false);
@@ -311,7 +311,7 @@ function _MDialog() {
     });
     btnArea.addView(cancel, btnLp);
 
-    var ok = new MButton();
+    const ok = new MButton();
     ok.setBoxShadow(0, 0, 0, 0, 0);
     ok.setText("ok");
     ok.setDimBg(false);
@@ -370,28 +370,28 @@ function _MDialog() {
     };
 
     this.show = function() {
-        var maskLp = new LP(LP.FP, LP.FP);
+        const maskLp = new LP(LP.FP, LP.FP);
         mRootView.addView(mask, maskLp);
 
         mRootView.addView(this);
 
         mask.setAlpha(0);
-        var a = new AlphaAnimation(0, 1);
+        const a = new AlphaAnimation(0, 1);
         a.setDuration(200);
         mask.startAnimation(a);
 
         this.setAlpha(0);
-        var a2 = new AlphaAnimation(0, 1);
+        const a2 = new AlphaAnimation(0, 1);
         a2.setDuration(200);
         this.startAnimation(a2);
     };
 
     this.hide = function() {
-        var a = new AlphaAnimation(1, 0);
+        const a = new AlphaAnimation(1, 0);
         a.setDuration(200);
         mask.startAnimation(a);
 
-        var a2 = new AlphaAnimation(1, 0);
+        const a2 = new AlphaAnimation(1, 0);
         a2.setDuration(200);
         a2.setAnimationEndListener(function() {
             mRootView.removeView(mask);
@@ -407,35 +407,35 @@ function _MDialog() {
 function MEditText() {
     ViewGroup.apply(this);
 
-    var labelSize = 12;
-    var textSize = 14;
-    var padding = 16;
-    var errSize = 12;
-    var gap = 8;
-    var textAreaH = 100;
+    const labelSize = 12;
+    let textSize = 14;
+    const padding = 16;
+    const errSize = 12;
+    const gap = 8;
+    const textAreaH = 100;
 
-    var self = this;
-    var hint = "";
-    var focused;
-    var disabled = false;
-    var isError = false;
-    var isSingleLine = true;
-    var focusListener = null;
-    var textChangeListener = null;
-    var highlightColor = 0xFF2196F2;
-    var textColor = 0xff212121;
-    var maxCount = 0;
+    const self = this;
+    let hint = "";
+    let focused;
+    let disabled = false;
+    let isError = false;
+    let isSingleLine = true;
+    let focusListener = null;
+    let textChangeListener = null;
+    let highlightColor = 0xFF2196F2;
+    const textColor = 0xff212121;
+    let maxCount = 0;
 
     this.setTag("MEditText");
 
-    var makeEditText = function() {
+    const makeEditText = function() {
         editText.setHintText(hint);
         editText.setTextSize(textSize);
         editText.setHintColor(0xffbcbcbc);
     };
 
-    var updateCountView = function() {
-        var curCount = editText.getText().length;
+    const updateCountView = function() {
+        const curCount = editText.getText().length;
         countView.setText(curCount + "/" + maxCount);
         if (maxCount > 0 && curCount > maxCount) {
             self.setError(true);
@@ -444,7 +444,7 @@ function MEditText() {
         }
     };
 
-    var updateLine = function() {
+    const updateLine = function() {
         if (disabled) {
             line.setStyle("border-top", "#bcbcbc 1px dashed");
         } else if (isError) {
@@ -456,7 +456,7 @@ function MEditText() {
         }
     };
 
-    var updateTextColor = function() {
+    const updateTextColor = function() {
         if (isError) {
             label.setTextColor(0xffdd3226);
             countView.setTextColor(0xffdd3226);
@@ -557,13 +557,13 @@ function MEditText() {
         makeEditText();
     };
 
-    var label = new TextView();
+    const label = new TextView();
     label.setTextSize(12);
     this.addView(label);
 
-    var t = null;
+    let t = null;
 
-    var editText = new EditText();
+    const editText = new EditText();
     makeEditText();
     editText.setOnFocusChangeListener(function(f) {
         if (focusListener != null) {
@@ -605,18 +605,18 @@ function MEditText() {
     });
     this.addView(editText);
 
-    var errorMsg = new TextView();
+    const errorMsg = new TextView();
     errorMsg.setTextSize(12);
     errorMsg.setTextColor(0xFFDD3226);
     this.addView(errorMsg);
 
-    var countView = new TextView();
+    const countView = new TextView();
     countView.setTextSize(12);
     countView.setVisibility(View.GONE);
     countView.setGravity(Gravity.RIGHT);
     this.addView(countView);
 
-    var line = new View();
+    const line = new View();
     this.addView(line);
 
     updateLine();
@@ -627,14 +627,14 @@ function MEditText() {
     };
 
     this.onMeasure = function(wMS) {
-        var w = MS.getSize(wMS);
-        var cntW = w;
+        const w = MS.getSize(wMS);
+        const cntW = w;
 
         measureTextView(label, cntW, labelSize);
         measureTextView(errorMsg, cntW, labelSize);
         measureTextView(countView, cntW, labelSize);
 
-        var h = 0;
+        let h = 0;
         if (isSingleLine) {
             h = padding * 2 + gap * 2 + errSize + labelSize + 2 + textSize + 2;
             Utils.measureExactly(editText, cntW, h);
@@ -649,8 +649,8 @@ function MEditText() {
     };
 
     this.onLayout = function() {
-        var x = 0;
-        var y = padding;
+        const x = 0;
+        let y = padding;
         label.layout(x, y - 2);
 
         y = padding + 10 + gap;
@@ -677,23 +677,23 @@ function MSelectionButton() {
 
     this.setTag("MSelectionButton");
 
-    var width = 160;
-    var height = 48;
+    let width = 160;
+    const height = 48;
 
-    var self = this;
-    var isMenuShow = false;
-    var mask = new View();
-    var menuPanel = new MenuPanel();
-    var items = [];
-    var selectIndex = 0;
+    const self = this;
+    let isMenuShow = false;
+    const mask = new View();
+    const menuPanel = new MenuPanel();
+    const items = [];
+    let selectIndex = 0;
 
-    var selectedItem = new SelectedItem();
+    const selectedItem = new SelectedItem();
     selectedItem.setOnClickListener(function(){
         self.showMenu();
     });
     this.addView(selectedItem);
 
-    var line = new View();
+    const line = new View();
     line.setBg(0xffbcbcbc);
     this.addView(line);
 
@@ -720,11 +720,11 @@ function MSelectionButton() {
         mask.setOnClickListener(function(){
             self.hideMenu();
         });
-        var maskLp = new LP(LP.FP, LP.FP);
+        const maskLp = new LP(LP.FP, LP.FP);
         mRootView.addView(mask, maskLp);
 
-        var lp = new LP(width, LP.WC);
-        var offset = Utils.getOffset(this.div);
+        const lp = new LP(width, LP.WC);
+        const offset = Utils.getOffset(this.div);
         menuPanel.makeMenu();
         menuPanel.setAlpha(0);
         lp.leftMargin = offset.left;
@@ -732,13 +732,13 @@ function MSelectionButton() {
         mRootView.addView(menuPanel, lp);
         isMenuShow = true;
 
-        var a = new AlphaAnimation(0, 1);
+        const a = new AlphaAnimation(0, 1);
         a.setDuration(100);
         menuPanel.startAnimation(a);
     };
 
     this.hideMenu = function() {
-        var a = new AlphaAnimation(1, 0);
+        const a = new AlphaAnimation(1, 0);
         a.setDuration(100);
         a.setAnimationEndListener(function() {
             mRootView.removeView(mask);
@@ -755,8 +755,8 @@ function MSelectionButton() {
     };
 
     this.onLayout = function() {
-        var x = 0;
-        var y = 0;
+        const x = 0;
+        let y = 0;
         selectedItem.layout(x, y);
 
         y = this.getMH() - line.getMH();
@@ -768,14 +768,14 @@ function MSelectionButton() {
 
         this.setWillNotDraw(false);
 
-        var cnt = new LinearLayout();
+        const cnt = new LinearLayout();
         cnt.setOrientation(LinearLayout.HORIZONTAL);
-        var cntLp = new LP(LP.FP, LP.FP);
+        const cntLp = new LP(LP.FP, LP.FP);
         this.addView(cnt, cntLp);
 
-        var textView = new TextView();
+        const textView = new TextView();
         textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        var textLp = new LP(0, LP.FP);
+        const textLp = new LP(0, LP.FP);
         textLp.weight = 1;
         cnt.addView(textView, textLp);
 
@@ -784,11 +784,11 @@ function MSelectionButton() {
         };
 
         this.onDraw = function(c) {
-            var w = this.getMW() * DisplayMetrics.density;
-            var h = this.getMH() * DisplayMetrics.density;
-            var s = 6;
-            var x = (w - h) + (h / 2) - 10;
-            var y = (h - s) / 2;
+            const w = this.getMW() * DisplayMetrics.density;
+            const h = this.getMH() * DisplayMetrics.density;
+            const s = 6;
+            const x = (w - h) + (h / 2) - 10;
+            const y = (h - s) / 2;
             c.fillStyle = "#bcbcbc";
             c.beginPath();
             c.moveTo(x, y);
@@ -806,15 +806,15 @@ function MSelectionButton() {
         this.setBoxShadow(0, 1, 2, 1, 0x33000000);
         this.setPadding(0, 8, 0, 8);
 
-        var buttonView = new LinearLayout();
+        const buttonView = new LinearLayout();
         buttonView.setOrientation(LinearLayout.VERTICAL);
-        var buttonViewLp = new LP(LP.FP, LP.WC);
+        const buttonViewLp = new LP(LP.FP, LP.WC);
         this.addView(buttonView, buttonViewLp);
 
         this.makeMenu = function() {
             buttonView.removeAllViews();
             this.addMenuItem(selectIndex);
-            for (var i = 0; i < items.length; i++) {
+            for (let i = 0; i < items.length; i++) {
                 if (i != selectIndex) {
                     this.addMenuItem(i);
                 }
@@ -822,8 +822,8 @@ function MSelectionButton() {
         };
 
         this.addMenuItem = function(index) {
-            var buttonLp = new LP(LP.FP, 48);
-            var button = createButton(items[index]);
+            const buttonLp = new LP(LP.FP, 48);
+            const button = createButton(items[index]);
             button.setId(index);
             button.setOnClickListener(function () {
                 self.setSelect(this.getId());
@@ -832,8 +832,8 @@ function MSelectionButton() {
             buttonView.addView(button, buttonLp);
         };
 
-        var createButton = function(text) {
-            var b = new MButton();
+        const createButton = function(text) {
+            const b = new MButton();
             b.setText(text);
             b.setTextColor(textColor);
             b.setTextSize(textSize);
@@ -850,18 +850,18 @@ function MSelectionButton() {
 function WaveDrawable() {
     Drawable.apply(this);
 
-    var self = this;
-    var waveDuration = 500;
+    const self = this;
+    const waveDuration = 500;
 
-    var processor = new Processor();
+    const processor = new Processor();
 
-    var curState = View.VIEW_STATE_ENABLED;
-    var x = 0;
-    var y = 0;
-    var dimBg = true;
-    var maxRadius = 9999;
-    var waveColor = 0x25191919;
-    var waving = false;
+    let curState = View.VIEW_STATE_ENABLED;
+    let x = 0;
+    let y = 0;
+    let dimBg = true;
+    let maxRadius = 9999;
+    let waveColor = 0x25191919;
+    let waving = false;
 
     this.onStateChange = function(s) {
         if (curState != View.VIEW_STATE_PRESSED && s == View.VIEW_STATE_PRESSED) {
@@ -927,24 +927,24 @@ function WaveDrawable() {
     };
 
     this.drawPress = function(c) {
-        var b = this.getBounds();
+        const b = this.getBounds();
 
         if (dimBg) {
             c.fillStyle = Utils.toCssColor(waveColor);
             c.fillRect(b.left, b.top, b.width(), b.height());
         }
 
-        var offsetX = b.left + x;
-        var offsetY = b.top + y;
-        var p = processor.getCurrProcess();
-        var radius = b.height() / 2 + b.width() * p * 2;
+        const offsetX = b.left + x;
+        const offsetY = b.top + y;
+        const p = processor.getCurrProcess();
+        let radius = b.height() / 2 + b.width() * p * 2;
         radius = radius / 2;
         radius = Math.min(radius, maxRadius);
         c.beginPath();
         c.arc(offsetX, offsetY, radius, 0, Math.PI * 2, true);
         c.closePath();
-        var alpha = Color.alpha(waveColor);
-        var color = Color.argb((1 - p * 0.8) * alpha, Color.red(waveColor), Color.green(waveColor), Color.blue(waveColor));
+        const alpha = Color.alpha(waveColor);
+        const color = Color.argb((1 - p * 0.8) * alpha, Color.red(waveColor), Color.green(waveColor), Color.blue(waveColor));
         c.fillStyle = Utils.toCssColor(color);
         c.fill();
     };
@@ -972,9 +972,9 @@ function WaveDrawable() {
 function MRadioGroup() {
     LinearLayout.apply(this);
 
-    var self = this;
-    var checkedId = -1;
-    var onCheckedChangeListener = null;
+    const self = this;
+    let checkedId = -1;
+    let onCheckedChangeListener = null;
 
     this.addChild = function(child, indexOrParams, params) {
         if (child.isChecked()) {
@@ -1051,7 +1051,7 @@ function MRadioGroup() {
     }
 
     function setCheckedStateForView(viewId, checked) {
-        var checkedView = self.findViewById(viewId);
+        const checkedView = self.findViewById(viewId);
         if (checkedView != null) {
             checkedView.setChecked(checked);
         }
@@ -1075,19 +1075,19 @@ function MRadioGroup() {
 function MRadioButton() {
     ViewGroup.apply(this);
 
-    var height = 48;
+    const height = 48;
 
-    var self = this;
-    var color = 0xff009688;
-    var checked = false;
+    const self = this;
+    let color = 0xff009688;
+    let checked = false;
 
-    var checkedListener = null;
+    let checkedListener = null;
 
-    var radioCheck = new MRadioCheck();
+    const radioCheck = new MRadioCheck();
     radioCheck.setOnClickListener(onclick);
     this.addView(radioCheck);
 
-    var text = new TextView();
+    const text = new TextView();
     text.setTextSize(16);
     text.setTextColor(0xff212121);
     text.setPadding(4);
@@ -1123,7 +1123,7 @@ function MRadioButton() {
     };
 
     this.onMeasure = function(wMS) {
-        var w = MS.getSize(wMS);
+        const w = MS.getSize(wMS);
 
         radioCheck.measure(50, 48);
         text.measure(w - 50, MS.makeMS(48, MS.EXACTLY));
@@ -1132,8 +1132,8 @@ function MRadioButton() {
     };
 
     this.onLayout = function() {
-        var x = 0;
-        var y = 0;
+        let x = 0;
+        const y = 0;
         radioCheck.layout(x, y);
 
         x += 50;
@@ -1150,9 +1150,9 @@ function MRadioButton() {
     function MRadioCheck() {
         View.apply(this);
 
-        var density = DisplayMetrics.density;
+        const density = DisplayMetrics.density;
 
-        var bg = new WaveDrawable();
+        const bg = new WaveDrawable();
         bg.setCallback(this);
 
         this.setWillNotDraw(false);
@@ -1163,9 +1163,9 @@ function MRadioButton() {
         };
 
         this.setChecked = function() {
-            var r = Color.red(color);
-            var g = Color.green(color);
-            var b = Color.blue(color);
+            const r = Color.red(color);
+            const g = Color.green(color);
+            const b = Color.blue(color);
             bg.setWaveColor(Color.argb(25, r, g, b));
             this.postInvalidate();
         };
@@ -1192,8 +1192,8 @@ function MRadioButton() {
                 c.strokeStyle = Utils.toCssColor(0x88000000);
                 c.fillStyle = Utils.toCssColor(0x88000000);
             }
-            var x = 24 * density;
-            var y = 24 * density;
+            const x = 24 * density;
+            const y = 24 * density;
             c.lineWidth = 2 * density;
             c.beginPath();
             c.arc(x, y, 9 * density, 0, Math.PI * 2, false);
@@ -1222,21 +1222,21 @@ function MRadioButton() {
 function MToggleButton() {
     View.apply(this);
 
-    var density = DisplayMetrics.density;
-    var paddingX = 24;
-    var trackRadius = 8;
-    var self = this;
-    var checked;
-    var onCheckedChangeListener;
-    var downX;
-    var color = 0xff009688;
-    var thumbColor;
-    var trackColor;
-    var processor = new Processor();
-    var distance;
-    var radius;
+    const density = DisplayMetrics.density;
+    const paddingX = 24;
+    const trackRadius = 8;
+    const self = this;
+    let checked;
+    let onCheckedChangeListener;
+    let downX;
+    let color = 0xff009688;
+    let thumbColor;
+    let trackColor;
+    const processor = new Processor();
+    let distance;
+    let radius;
 
-    var wave = new WaveDrawable();
+    const wave = new WaveDrawable();
     wave.setDimBg(false);
     wave.setX(24 * density);
     wave.setY(24 * density);
@@ -1266,9 +1266,9 @@ function MToggleButton() {
             wave.setWaveColor(0x1a000000);
         } else {
             thumbColor = color;
-            var r = Color.red(thumbColor);
-            var g = Color.green(thumbColor);
-            var b = Color.blue(thumbColor);
+            const r = Color.red(thumbColor);
+            const g = Color.green(thumbColor);
+            const b = Color.blue(thumbColor);
             trackColor = Color.argb(128, r, g, b);
             wave.setWaveColor(Color.argb(50, r, g, b));
         }
@@ -1328,19 +1328,19 @@ function MToggleButton() {
     this.setChecked(false);
 
     this.onMeasure = function() {
-        var trackW = 24 - trackRadius;
-        var w = trackW + 48;
-        var h = 48;
+        const trackW = 24 - trackRadius;
+        const w = trackW + 48;
+        const h = 48;
         this.setMD(w, h);
     };
 
     this.onDraw = function(c) {
-        var w = self.getMW() * density;
-        var h = self.getMH() * density;
-        var p = processor.getCurrProcess();
-        var r = 24 * density;
-        var offsetX;
-        var offsetY;
+        const w = self.getMW() * density;
+        const h = self.getMH() * density;
+        const p = processor.getCurrProcess();
+        const r = 24 * density;
+        let offsetX;
+        let offsetY;
         radius = 10 * density;
         distance = w - paddingX * 2 * density;
 
@@ -1376,7 +1376,7 @@ function MToggleButton() {
     };
 
     this.onTouchEvent = function(e) {
-        var p = 0;
+        let p = 0;
         if (checked) {
             p = 1 - (downX - e.getX()) / (distance / density);
         } else {
@@ -1423,18 +1423,18 @@ function MToggleButton() {
     };
 }
 
-var MSnackBar = new _MSnackbar();
+const MSnackBar = new _MSnackbar();
 function _MSnackbar() {
     ViewGroup.apply(this);
-    var maxWidth = 568;
-    var height = 48;
-    var textSize = 14;
-    var mSelf = this;
-    var showing = false;
+    const maxWidth = 568;
+    const height = 48;
+    const textSize = 14;
+    const mSelf = this;
+    let showing = false;
 
-    var hide = function() {
+    const hide = function() {
         console.log("hide snackbar");
-        var t = new TranslateAnimation(0, 0, 0, height);
+        const t = new TranslateAnimation(0, 0, 0, height);
         t.setDuration(200);
         t.setAnimationEndListener(function() {
             mRootView.removeView(mSelf);
@@ -1447,7 +1447,7 @@ function _MSnackbar() {
     this.setCornerSize(2);
     this.setBg(0xff323232);
 
-    var cnt = new TextView();
+    const cnt = new TextView();
     cnt.setSingleLine(true);
     cnt.setTextSize(textSize);
     cnt.setTextColor(0xffffffff);
@@ -1462,14 +1462,14 @@ function _MSnackbar() {
         console.log("show snackbar");
         showing = true;
         cnt.setText(text);
-        var lp = new LP(LP.WC, LP.WC);
+        const lp = new LP(LP.WC, LP.WC);
         lp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         mRootView.addView(this, lp);
-        var t = new TranslateAnimation(0, 0, height, 0);
+        const t = new TranslateAnimation(0, 0, height, 0);
         t.setDuration(200);
         this.startAnimation(t);
 
-        var duration = 2500;
+        let duration = 2500;
         if (time != undefined) {
             duration = time;
         }
@@ -1479,7 +1479,7 @@ function _MSnackbar() {
     };
 
     this.onMeasure = function(wMS) {
-        var w = MS.getSize(wMS);
+        let w = MS.getSize(wMS);
         w = Math.min(w, maxWidth);
 
         cnt.measure(MS.makeMS(w, MS.UNSPECIFIED), MS.makeMS(height, MS.EXACTLY));
